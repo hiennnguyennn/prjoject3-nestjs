@@ -1,0 +1,132 @@
+<div class="header">
+    <div class="pre-header">
+        <ul class="left">
+            <li>
+                <i class="far fa-envelope"></i>
+                <a href="#">explora@qode.com</a>
+            </li>
+            <li>
+                <i class="fas fa-phone-alt"></i>
+                <a href="#">1 562 867 5309</a>
+            </li>
+            <li>
+                <i class="fas fa-map-marker-alt"></i>
+                <a href="#">Broadway & Morris St, New York</a>
+            </li>
+        </ul>
+        <ul class="right">
+            <li class="item">
+                <i class="fab fa-twitter"></i>
+            </li>
+            <li class="item">
+                <i class="fab fa-pinterest-p"></i>
+            </li>
+            <li class="item">
+                <i class="fab fa-facebook-f"></i>
+            </li>
+            <li class="item">
+                <i class="fab fa-instagram"></i>
+            </li>
+            <li class="item2">
+                <a href="#">
+                    <i class="fas fa-user-circle"></i>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="header-main">
+        <nav class="navbar navbar-expand-lg navbar-light ">
+            <div class="container-fluid">
+                <a class="siteId" href="/">
+                    <img src="/image/web/logo3.png">
+                </a>
+                <div class="collapse navbar-collapse d-flex justify-content-center" id="navbarSupportedContent">
+                    <ul class="menu navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="menu-item d-flex align-items-center nav-item ">
+                            Home
+                            <ul class="dropdown-menu">
+                                <li><a href="#">Travel Agency</a></li>
+                                <li><a href="#">Winter Holidays</a></li>
+                                <li><a href="#">Exotic Destinations</a></li>
+                                <li><a href="#">Summer Holidays</a></li>
+                                <li><a href="#">City Tours</a></li>
+                                <li><a href="#">New Year Trips</a></li>
+                                <li><a href="#">Destinations Carousel</a></li>
+                                <li><a href="#">Wine Tours</a></li>
+                                <li><a href="#">Vacation Showcase</a></li>
+                                <li><a href="#">Landing</a></li>
+
+                            </ul>
+                        </li>
+                        <li class="menu-item d-flex align-items-center nav-item ">
+                            Pages
+                            <ul class="dropdown-menu">
+                                <li><a href="#">About Us</a></li>
+                                <li><a href="#">What We Offer</a></li>
+                                <li><a href="#">Our Team</a></li>
+                                <li><a href="#">Get In Touch</a></li>
+                                <li><a href="#">Contact Us</a></li>
+                                <li><a href="#">FAQ Page</a></li>
+                                <li><a href="#">Error Page</a></li>
+                            </ul>
+                        </li>
+                        <li class="menu-item -flex align-items-center nav-item ">
+                            <a href="/destination">
+                                Destinations
+                            </a>
+                        </li>
+                        <li class="menu-item d-flex align-items-center nav-item ">
+                            <a href="/tour">
+                                Tours
+                            </a>
+                        </li>
+                        <li class="menu-item d-flex align-items-center nav-item ">
+                            Create
+                            <ul class="dropdown-menu">
+                                <li><a href="/destination/create">Destination</a></li>
+                                <li><a href="tour/create">Tour</a></li>
+
+
+                            </ul>
+                        </li>
+
+
+                    </ul>
+                </div>
+                <div>
+                    <ul class="navbar-nav menu-icon">
+                        <li class="d-flex align-items-center nav-item nav-link">
+                            <a><i class="fas fa-shopping-basket"></i></a>
+                        </li>
+                        <li class="d-flex align-items-center nav-link "><i class="fas fa-search"></i></li>
+                        <li class="hide d-flex align-items-center nav-link dropdown">
+                            {{!-- <img src='{{avatar}}'> --}}
+                            <img src="https://avatar-redirect.appspot.com/google/106985616779575625930?size=400">
+                            <div class="dropdown-content active">
+                                <a href="/login">Login</a>
+                                <a href="/register">Register</a>
+                            </div>
+                            <div class="dropdown-content ">
+                                <a href="/login">My profile</a>
+                                <a href="/me/logout">Log out</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+</div>
+<script>
+    var drop = document.querySelectorAll('.dropdown-content');
+    var login = {{ login }};
+    console.log(login);
+    if (login) {
+        drop[1].classList.add('active');
+        drop[0].classList.remove('active');
+    }
+    else {
+        drop[0].classList.add('active');
+        drop[1].classList.remove('active');
+    }
+</script>

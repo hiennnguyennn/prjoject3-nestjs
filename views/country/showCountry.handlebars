@@ -1,0 +1,112 @@
+{{>header}}
+<div class="destination-info">
+    <div class="slide-container">
+        <div class="slider" style="background-image: url('{{c.img.[0]}}');"></div>
+        <div>
+            <h3>Destinations</h3>
+            <h1>{{c.name}}</h1>
+        </div>
+    </div>
+    <div class="body">
+        <div class="body-container">
+            <div class="body-content">
+                <div class="intro">
+                    <h3>{{c.name}}</h3>
+                    <p>{{c.intro}}</p>
+                    <div class="intro-img">
+                        <div>
+                            <img src="{{c.img.[1]}}">
+                        </div>
+                        <div>
+                            <img src="{{c.img.[2]}}">
+                        </div>
+                    </div>
+                    <p>{{c.des}}</p>
+                </div>
+                <div class="info">
+                    <h3>Good to Know</h3>
+                    <p>Read the basic info and also some fun facts about Australia! Here you will find everything you
+                        should know about the ‘’{{c.nickname}}’’! </p>
+                    <div class="row">
+                        <div class="col tittle">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <p>Country</p>
+                        </div>
+                        <p class="col">{{c.name}}</p>
+                    </div>
+                    <div class="row">
+                        <div class="col tittle">
+                            <i class="fas fa-book"></i>
+                            <p>Visa Requirements</p>
+                        </div>
+                        <p class="col">{{c.visa}}</p>
+                    </div>
+                    <div class="row">
+                        <div class="col tittle">
+                            <i class="far fa-comment"></i>
+                            <p>Languages spoken</p>
+                        </div>
+                        <p class="col">{{c.language}}</p>
+                    </div>
+                    <div class="row">
+                        <div class="tittle col">
+                            <i class="fas fa-wallet"></i>
+                            <p>Currency Used</p>
+                        </div>
+                        <p class="col">{{c.currency}}</p>
+                    </div>
+                    <div class="row">
+                        <div class="tittle col">
+                            <i class="far fa-compass"></i>
+                            <p>Area (km2)</p>
+                        </div>
+                        <p class="col">{{c.area}} km2</p>
+                    </div>
+                </div>
+                <div class="image">
+                    <h3>Municipalities</h3>
+                    <p>Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut met
+                        us varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue.</p>
+                    <div>
+                        <div>
+                            <img class="big-img" src="{{c.img.[3]}}">
+                            <img src="{{c.img.[4]}}">
+                        </div>
+                        <div>
+                            <img src="{{c.img.[5]}}">
+                            <img src="{{c.img.[6]}}">
+                            <img src="{{c.img.[7]}}">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="right">
+                <div class="category">
+                    <h5>Categories</h5>
+                    <ul>
+                        <li><a>Europe</a></li>
+                        <li><a>Latest</a></li>
+                        <li><a>NY</a></li>
+                        <li><a>Popular</a></li>
+                        <li><a>Skiing</a></li>
+                        <li><a>Trendy</a></li>
+                    </ul>
+                </div>
+                <div class="tags">
+
+                    <h5>Tags</h5>
+                    <div>
+                        <div class="tag"><a>camera</a></div>
+                        <div class="tag"><a></a>city</div>
+                        <div class="tag"><a>fun</a></div>
+                        <div class="tag"><a>summer</a></div>
+                        <div class="tag"><a>travel</a></div>
+                        <div class="tag"><a>winter</a></div>
+                    </div>
+                </div>
+            </div>
+            <div></div>
+        </div>
+    </div>
+</div>
+{{>footer}}

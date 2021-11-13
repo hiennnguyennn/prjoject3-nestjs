@@ -1,0 +1,412 @@
+.home_content .slider {
+  position: relative;
+  height: 700px;
+}
+
+.home_content .slider .carousel-caption h3 {
+  font-family: 'Satisfy', cursive;
+  font-size: 50px;
+  position: relative;
+  color: white;
+  animation: text1 10s 1;
+}
+.home_content .slider #carouselExampleControls .carousel-caption h1 {
+  font-size: 90px;
+  font-weight: bold;
+  color: white;
+  animation: text2 5s 1;
+}
+.home_content
+  .slider
+  #carouselExampleControls
+  .carousel-item
+  .carousel-caption {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.home_content #carouselExampleControls {
+  width: 100%;
+  height: 100%;
+}
+.home_content #carouselExampleControls .carousel-inner {
+  width: 100%;
+  height: 100%;
+}
+
+.home_content .slider .carousel-caption p {
+  width: 50vw;
+  margin: 0 auto;
+  font-size: 20px;
+  animation: text3 5s 1;
+  opacity: 1;
+}
+@keyframes text1 {
+  0% {
+    visibility: hidden;
+    margin-bottom: -20px;
+  }
+  30% {
+    letter-spacing: 25px;
+  }
+  85% {
+    letter-spacing: 0.01em;
+    display: block;
+  }
+}
+@keyframes text2 {
+  0% {
+    opacity: 0;
+    margin-bottom: -30px;
+  }
+  30% {
+    opacity: 0;
+    margin-bottom: -30px;
+  }
+  50% {
+    opacity: 0.4;
+    margin-bottom: -10px;
+  }
+  70% {
+    opacity: 1;
+    display: block;
+  }
+}
+@keyframes text3 {
+  0% {
+    opacity: 0;
+    margin-bottom: -30px;
+  }
+  30% {
+    opacity: 0;
+    margin-bottom: -30px;
+  }
+  50% {
+    opacity: 0;
+    margin-bottom: -10px;
+  }
+  70% {
+    opacity: 0.5;
+    display: block;
+  }
+}
+.home_content .slider .carousel-item img {
+  animation: image 10s 1;
+  transform: scale(1.2, 1.2);
+  width: 100%;
+  height: 100%;
+}
+@keyframes image {
+  0% {
+    transform: scale(1, 1);
+  }
+}
+.home_content .slider .find {
+  height: 78px;
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: 0 3px 13px 0 rgba(0, 0, 0, 0.07);
+  z-index: 7;
+  position: absolute;
+  bottom: -39px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.home_content .slider .find form {
+  height: 100%;
+  display: flex;
+  width: 100%;
+}
+.home_content .slider .find form input {
+  width: 28%;
+  height: 100%;
+  padding: 16px 20px 16px 53px;
+  color: #8e8e8e;
+  border: none;
+}
+.home_content .slider .find form input:focus {
+  outline: none;
+}
+.home_content .slider .find form input::placeholder {
+  color: #8e8e8e;
+}
+.home_content .slider .find form .drop {
+  position: relative;
+  bottom: 0;
+  height: 100%;
+  background-color: white;
+  width: 28%;
+
+  border-left: 1px solid #e8e8e8;
+  color: #8e8e8e;
+}
+
+.home_content .slider .find form .drop span {
+  height: 100%;
+  width: 100%;
+  padding: 16px 0px 16px 53px;
+  display: flex;
+  flex: 0 0 100%;
+  align-items: center;
+}
+.home_content .slider .find form .drop ul {
+  display: none;
+  background-color: white;
+  list-style-type: none;
+  position: absolute;
+  height: 200px;
+  color: #8e8e8e;
+  overflow: auto;
+  left: 0;
+  right: 0;
+  box-shadow: 0 3px 13px 0 rgba(0, 0, 0, 0.03);
+  top: 78px;
+  width: 100%;
+  padding: 2px 22px;
+  padding-top: 10px;
+}
+.home_content .slider .find form .drop ul li {
+  padding: 7px 0;
+  color: #8e8e8e;
+}
+.home_content .slider .find form button {
+  background-color: #3fd0d4;
+  height: 100%;
+  width: 16%;
+  padding: 28px 10px;
+  height: 100%;
+  border: none;
+}
+.home_content .slider .find form .drop .shows {
+  display: block;
+}
+
+.home_content .tour-content {
+  padding: 0 15px;
+  text-align: center;
+  margin-bottom: 150px;
+}
+.home_content .head {
+  margin-top: 150px;
+  margin-left: -15px;
+  margin-right: -15px;
+}
+
+.home_content .head p {
+  margin-top: 12px;
+  font-size: 17px;
+  margin-bottom: 0;
+  line-height: 28px;
+  padding-left: 30%;
+  padding-right: 30%;
+}
+
+.home_content .tour-content .content {
+  width: 87%;
+
+  margin: 60px auto 150px auto;
+}
+
+.home_content .text-in-img {
+  position: absolute;
+  font-family: 'Satisfy', cursive;
+  color: white;
+  font-size: 3rem;
+  z-index: 1;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.home_content .tour-content .content .row .tour-info {
+  width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+  position: relative;
+}
+
+.home_content .tour-content .content .row .tour-info img {
+  width: 100%;
+  object-fit: contain;
+  transition: transform 0.5s ease;
+  transform-origin: 50% 50%;
+}
+.home_content .tour-content .content .row .tour-info img:hover {
+  width: 100%;
+  transform: scale(1.1);
+}
+.home_content .tour-content .content .row .tour-info .hot_new {
+  position: absolute;
+  right: 20px;
+  top: 7px;
+  z-index: 1;
+}
+.home_content .tour-content .content .row .tour-info .detail {
+  padding: inherit;
+  position: absolute;
+  left: 0;
+  right: 0;
+  color: white;
+  top: 80%;
+  flex-shrink: 0;
+}
+.home_content .tour-content .content .row .tour-info .detail p {
+  font-weight: 600;
+  text-align: left;
+  margin: 0;
+}
+.home_content .tour-content .content .row .tour-info .detail h5 {
+  margin: 0;
+  font-weight: 900;
+  font-size: 18px;
+  letter-spacing: -0.05em;
+}
+.home_content .tour-content .content .row .tour-info .detail > div {
+  position: relative;
+  float: left;
+  margin-left: 20px;
+}
+.home_content .tour-content .content .row .tour-info .detail > h5 {
+  float: right;
+
+  margin-right: 10px;
+  margin-top: 20px;
+}
+.home_content .tour-content .content .row {
+  margin-bottom: 30px;
+}
+
+.home_content .video .video-content {
+  background-image: url('https://setsail.qodeinteractive.com/wp-content/uploads/2018/09/h1-parallax-img-1.jpg');
+
+  padding: 106px 250px 451px 250px;
+  background-size: cover;
+  color: white;
+  text-align: center;
+  position: relative;
+}
+.home_content .video .video-content div h3 {
+  color: white;
+}
+.home_content .video .video-content div p {
+  padding: 0 20%;
+}
+.home_content .video .video-content div:last-child {
+  width: 60vw;
+  margin: 0 auto;
+  position: absolute;
+  bottom: -100px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.home_content .video .video-footer {
+  width: 90vw;
+  margin: 0 auto;
+  text-align: center;
+  padding: 200px 0;
+  padding-bottom: 150px;
+}
+.home_content .video .video-footer .item {
+  padding: 0 45px;
+}
+.home_content .video .video-footer h5 {
+  margin-top: 27px;
+  margin-bottom: 11px;
+}
+
+.home_content .destination {
+  align-items: center;
+  transition: background 0.4s ease-in;
+  justify-content: center;
+  overflow: hidden;
+  background-image: url('https://setsail.qodeinteractive.com/wp-content/uploads/2018/10/h1-background-img-2.jpg');
+  /* background-image: url('/image/web/destination.jpg'); */
+  background-size: cover;
+  padding-bottom: 150px;
+}
+.home_content .destination .head {
+  margin-top: 250px;
+  text-align: center;
+}
+.home_content .destination .swiper {
+  width: 100%;
+  padding-top: 50px;
+  padding-bottom: 200px;
+}
+
+.home_content .destination .swiper-slide {
+  background-position: center;
+  background-size: cover;
+  width: 350px;
+  height: 350px;
+  -webkit-box-reflect: below 1px
+    linear-gradient(transparent, transparent, #0006);
+}
+.home_content .destination .swiper-slide div {
+  margin-top: 10px;
+  text-align: center;
+}
+
+.home_content .destination .swiper-slide img {
+  border-radius: 10%;
+  display: block;
+  width: 100%;
+}
+
+.home_content .plan-holiday {
+  text-align: center;
+  background-color: #f8f8f8;
+  overflow: hidden;
+  padding-bottom: 150px;
+}
+
+.home_content .plan-holiday .swiper-slide div {
+  padding: 31px 25px 33px 25px;
+  background-color: white;
+  text-align: left;
+}
+.home_content .plan-holiday .swiper-slide h4 {
+  font-weight: bolder;
+}
+
+.home_content .plan-holiday .swiper {
+  margin-top: 60px;
+  width: 100%;
+  height: 100%;
+  padding: 0 40px 100px 40px;
+}
+
+.home_content .plan-holiday .swiper-slide2 {
+  text-align: center;
+  font-size: 18px;
+  background: #fff;
+  /* Center slide text vertically */
+
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+}
+
+.home_content .plan-holiday .swiper-slide img {
+  display: block;
+  width: 100%;
+
+  object-fit: cover;
+}
+.home_content .plan-holiday .swiper-slide {
+  width: 60%;
+}
+
+.home_content .plan-holiday .swiper-slide:nth-child(2n) {
+  width: 40%;
+}
+
+.home_content .plan-holiday .swiper-slide:nth-child(3n) {
+  width: 20%;
+}

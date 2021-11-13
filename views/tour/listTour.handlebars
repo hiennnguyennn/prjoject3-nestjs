@@ -1,0 +1,161 @@
+{{>header}}
+<form class="tour-list">
+    <div class="slider">
+        <div class="slider-img"></div>
+        <h1>Tours Search Page</h1>
+    </div>
+    <div class="body-container">
+        <div class="body">
+            <ul class=" body-header row">
+                <li class="date h-info col h-active"><a href="/tour?tour_name={{name}}&destination={{des}}&month{{month}}&category={{category}}&sortTour=date"><i class="far fa-calendar"></i>DATE</a></li>
+                <li class="pricelth col"><a href="/tour?tour_name={{name}}&destination={{des}}&month{{month}}&category={{category}}&sortTour=pricelth"><i class="fas fa-arrow-up"></i>PRICE LOW TO HIGH</a></li>
+                <li class=" pricehtl col"><a href="tour?tour_name={{name}}&destination={{des}}&month{{month}}&category={{category}}&sortTour=pricehtl"><i class="fas fa-arrow-down"></i>PRICE LOW TO HIGH</a></li>
+                <li class="name col"><a class="linkname" href="/tour?tour_name={{name}}&destination={{des}}&month{{month}}&category={{category}}&sortTour=nameasc"><i class="sort-name fas fa-sort-alpha-down"></i><i
+                            class="hide sort-name fas fa-sort-alpha-down-alt"></i>NAME</a></li>
+            </ul>
+            <div class="body-content">
+                <div class="tours">
+                    {{#each tours}}
+                    <div class="tour">
+                        <div>
+                            <a href="/tour/{{this.slug}}"><img src="{{this.img.[0]}}"></a>
+                        </div>
+                        <div>
+                            <h4><a href="/tour/{{this.slug}}">{{this.name}}</a></h4>
+                            <p class="des">{{this.description}}</p>
+                            <p>${{this.cost}}</p>
+                            <div class="info-sold-age">
+                                <div><i class="fas fa-shopping-basket"></i>{{this.sold}}</div>
+                                <div><i class="fas fa-user-check"></i>{{this.age}}+</div>
+                                {{#each this.category}}
+                                <div><i class="fas fa-map-marker-alt"></i>{{this}}</div>
+                                {{/each}}
+                            </div>
+                        </div>
+                    </div>
+                    {{/each}}
+                    <nav aria-label="..." class="home-pagination">
+                        <ul class="pagination">
+                            <li class="page-item">
+                                <a class="page-link" href="/tour?tour_name={{name}}&destination={{des}}&month{{month}}&category={{category}}&sortTour={{s}}&page={{sum page -2}}">Previous</a>
+                            </li>
+                            <li class="page-item"><a class="page-link" href="/tour?tour_name={{name}}&destination={{des}}&month{{month}}&category={{category}}&sortTour={{s}}&page={{sum page -1}}" name="page"
+                                    value="{{sum page -1}}">{{sum page -1}}</a></li>
+                            <li class="page-item active" aria-current="page">
+                                <span class="page-link">{{page}}</span>
+                            </li>
+                            <li class="page-item"><a class="page-link" href="/tour?tour_name={{name}}&destination={{des}}&month{{month}}&category={{category}}&sortTour={{s}}&page={{sum page 1}}" name="page"
+                                    value="{{sum page 1}}">{{sum page 1}}</a></li>
+                            <li class="page-item">
+                                <a class="page-link" href="/tour?tour_name={{name}}&destination={{des}}&month{{month}}&category={{category}}&sortTour={{s}}&page={{sum page 2}}">Next</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="filter">
+                    <div class="filter-content">
+
+                        <form id="filter-tour" method="POST" action="/tour">
+                            <div class="first">
+                                <h4>Plan Your Trip</h4>
+                                <p>It’s time to plan just the perfect vacation!</p>
+                                <input type="text" name="tour_name" placeholder="Search Tour" value="{{name}}"></input>
+                                <input type="text" name="destination" placeholder="Where to?" value="{{des}}"></input>
+                                <input type="number" name="month" placeholder="Month" value="{{month}}"></input>
+                            </div>
+                            <div class="second">
+                                <h5>Filter by category</h5>
+                                <div><input type="radio" name="category" value="popular">Popular</div>
+                                <div><input type="radio" name="category" value="ny">NY</div>
+                                <div><input type="radio" name="category" value="latest">Latest</div>
+                                <div><input type="radio" name="category" value="skiing">Skiing</div>
+                               <div><input type="radio" name="category" value="europe">Europe</div> 
+                               <div><input type="radio" name="category" value="wines">Wines</div> 
+                               <div><input type="radio" name="category" value="trendy">Trendy</div> 
+                            </div>
+                            <button>SEARCH</i></button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</form>
+{{>footer}}
+<script>
+    var maxPage = {{ maxPage }};
+    var s="{{s}}";
+    document.addEventListener('DOMContentLoaded', function () {
+        var name=[];
+        name[0]=document.querySelector('.fa-sort-alpha-down');
+        name[1]=document.querySelector('.fa-sort-alpha-down-alt');
+        var a;
+        if(s=='nameasc'||s=='namedsc') a=document.getElementsByClassName('name')[0];
+        else a=document.getElementsByClassName(`${s}`)[0];
+        var des = document.querySelectorAll('.des');
+        for (var i = 0; i < des.length; i++) {
+            if (des[i].innerText.length > 80) {
+                des[i].innerText = des[i].innerText.slice(0, 80) + '...';
+            }
+        }
+        var form = document.querySelector('.tour-list')
+        var pageLoad = document.getElementsByClassName('page-item');
+        if (pageLoad[1].innerText == 0) {
+            pageLoad[0].classList.add('none');
+            pageLoad[1].classList.add('none');
+        };
+        if (pageLoad[1].innerText == 1) {
+            pageLoad[0].classList.add('none')
+        };
+        if (pageLoad[2].innerText == maxPage) {
+            pageLoad[3].classList.add('none');
+            pageLoad[4].classList.add('none');
+        };
+        if (pageLoad[3].innerText == maxPage) {
+            pageLoad[4].classList.add('none');
+        };
+        pageLoad[1].onclick = function (e) {
+            form.submit();
+        }
+        pageLoad[3].onclick = function (e) {
+            form.submit();
+        };
+        var menu=document.querySelectorAll('.body-header .col');
+        for(var i=0;i<menu.length;i++){
+           menu[i].classList.remove('h-active')
+        };
+        a.classList.add('h-active');
+       
+        for(var i=0;i<name.length;i++){
+            if(s=='nameasc'){
+                name[0].classList.add('hide');
+                name[1].classList.remove('hide');
+            }
+            else{      
+                name[1].classList.add('hide');
+                name[0].classList.remove('hide');
+            }
+        };
+        var a=document.querySelector('.linkname');
+        console.log(a);
+        for(var i=0;i<name.length;i++){
+            if(!name[i].classList.contains('hide')){
+                if(i==0){
+                    a.href='/tour?sortTour=nameasc';
+                }
+                else a.href='/tour?sortTour=namedsc';
+            }
+        }
+        var category=document.querySelectorAll('input[type="radio"]');
+        if("{{category}}"!==""){
+            for(var i=0;i<category.length;i++){
+                console.log(category[i].value);
+                if("{{category}}"==category[i].value){
+                    category[i].checked=true;
+                }
+            }
+        }
+    });
+</script>
