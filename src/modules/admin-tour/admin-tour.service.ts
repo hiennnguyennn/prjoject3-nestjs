@@ -27,7 +27,6 @@ export class AdminTourService {
   }
   async createTour(user, data: CreateTourDto, image) {
     try {
-      await console.log(data);
       const tmp = await this.tourRepository.getTourByname(data.name);
       image = Object(image).image;
       let f: string[] = [];
@@ -36,7 +35,7 @@ export class AdminTourService {
           f.push(item.filename);
         });
       }
-      console.log(2222);
+
       if (tmp) {
         await f.forEach((item, index) => {
           let path: string;
@@ -58,15 +57,15 @@ export class AdminTourService {
           await this.destinationRepository.getDestinationbyId(
             Number(data.from),
           );
-        console.log(111, data['fromDestintion']);
+
         let category = [];
         let tmp = data.category.split(',');
-        console.log(tmp);
+
         for (var i = 0; i < tmp.length; i++) {
           let c = await this.categoryRepository.getOne(Number(tmp[i]));
           category.push(c);
         }
-        console.log(category);
+
         data['isHot'] = 0;
         data['categories'] = category;
         data['destinations'] = des;
@@ -77,12 +76,11 @@ export class AdminTourService {
         );
 
         data.image = f;
-        console.log(2222);
+
         let t = await this.tourRepository.save(data);
-        console.log(11111);
+
         var plan = [];
         for (var i = 0; i < data.plan_titles.length; i++) {
-          console.log(i);
           plan[i] = {
             title: data.plan_titles[i],
             included: data.plan_includes[i],
@@ -90,7 +88,7 @@ export class AdminTourService {
             description: data.plan_descriptions[i],
             tour: t,
           };
-          console.log(plan[i]);
+
           await this.planRepository.save(plan[i]);
         }
         return t;
@@ -106,7 +104,7 @@ export class AdminTourService {
   }
   async tourDetail(id: number) {
     let tours = await this.tourRepository.getTourById(id);
-    console.log(tours);
+
     let tmp = {};
     for (var i = 0; i < tours.included.length; i++) {
       tmp['included'] = tours.included.split(';');
@@ -199,12 +197,7 @@ export class AdminTourService {
         des.push(t);
       }
       data['destinations'] = des;
-      // console.log(1111, f, images);
-      // data['destinations'] = des;
-      // if (images.length === 0) images = f;
-      // else {
-      //   if (f.length !== 0) images = images.concat(f);
-      // }
+
       images = images.concat(f);
 
       data.image = images;
@@ -218,10 +211,8 @@ export class AdminTourService {
     }
   }
   async editHotTour(id: number) {
-    console.log(id);
     let t = await this.tourRepository.getTourById(id);
     if (t) {
-      console.log(t);
       t.isHot = 1 - t.isHot;
       return await t.save();
     } else throw new BadRequestException('NOT FOUND');

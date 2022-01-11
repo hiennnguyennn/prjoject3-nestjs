@@ -1,6 +1,7 @@
 import { paginateRaw } from 'nestjs-typeorm-paginate';
 import { EntityRepository, Repository } from 'typeorm';
 import { ListTourDto } from '../admin-tour/dto/list.dto';
+import { ListTourInUserDto } from './dto/list.dto';
 
 import { Tour } from './entities/tour.entity';
 
@@ -41,7 +42,6 @@ export class TourRepository extends Repository<Tour> {
       page: data.page,
     });
     for (var i = 0; i < result.items.length; i++) {
-      console.log(i, result.items[i]);
       let des = await this.createQueryBuilder('tour')
         .where('tour.id= :id', { id: result.items[i]['tour_id'] })
         .leftJoinAndSelect('tour.destinations', 'destinations')
@@ -54,9 +54,7 @@ export class TourRepository extends Repository<Tour> {
           tmp += des['destinations'][j].name;
         else tmp += des['destinations'][j].name + ', ';
       }
-      console.log(i, result.items[i]);
-      console.log(result.items[i], tmp);
-      //console.log(i, result.items[i]['tour_id'], des['destinations']);
+
       result.items[i]['des'] = tmp;
     }
     return result;
@@ -123,6 +121,7 @@ export class TourRepository extends Repository<Tour> {
       .addSelect('tour.description')
       .addSelect('tour.price')
       .addSelect('tour.image')
+      .addSelect('tour.minAge')
       .getMany();
   }
   async searchTour(data: string) {
@@ -133,5 +132,42 @@ export class TourRepository extends Repository<Tour> {
       .limit(5)
       .getMany();
     return t;
+  }
+  async getListInUser(data: ListTourInUserDto) {
+    let t = await this.createQueryBuilder('tour')
+      .where('tour.status=1')
+      .select('tour.name')
+      .addSelect('tour.id')
+      .addSelect('tour.description')
+      .addSelect('tour.price')
+      .addSelect('tour.image')
+      .leftJoinAndSelect('tour.categories', 'categories')
+      .addSelect('tour.minAge')
+      .leftJoinAndSelect('tour.departures', 'departures')
+      .leftJoinAndSelect('tour.destinations', 'destinations')
+      .groupBy('tour.id');
+    if (data.search)
+      t.andWhere('tour.name like :search', { search: `%${data.search}%` });
+    if (data.month) {
+      var date = new Date();
+      var start = new Date(date.getFullYear(), Number(data.month) - 1, 1);
+      var end = new Date(date.getFullYear(), Number(data.month), 0);
+
+      t.andWhere('departures.start >= :start', { start: start });
+    }
+    if (data.category) {
+      t.andWhere('categories.id= :categoryId', { categoryId: data.category });
+    }
+    if (data.destination) {
+      t.andWhere('destinations.id = :destinationsId', {
+        destinationsId: Number(data.destination),
+      });
+    }
+    if (data.sort === 'asc') t.orderBy(`tour.${data.sortField}`, 'ASC');
+    else if (data.sort === 'desc') t.orderBy(`tour.${data.sortField}`, 'DESC');
+    return await paginateRaw<Tour>(t, {
+      limit: data.limit,
+      page: data.page,
+    });
   }
 }

@@ -1,6 +1,7 @@
 import { Category } from 'src/modules/admin-category/entities/category.entity';
 import { Departure } from 'src/modules/admin-departure/entities/departure.entity';
 import { Destination } from 'src/modules/destination/entity/destination.entity';
+import { Ticket } from 'src/modules/tour/entities/ticket.entity';
 import { Tour } from 'src/modules/tour/entities/tour.entity';
 import {
   BaseEntity,
@@ -29,7 +30,7 @@ export class User extends BaseEntity {
   phone: string;
 
   @Column({ nullable: true, name: 'dob', select: false })
-  dob: Date;
+  dob: string;
 
   @Column({ nullable: true, name: 'id_card', select: false })
   id_card: string;
@@ -79,4 +80,10 @@ export class User extends BaseEntity {
     eager: true,
   })
   category: Category[];
+
+  @OneToMany(() => Ticket, (ticket) => ticket.owner, {
+    cascade: true,
+    eager: true,
+  })
+  tickets: Ticket[];
 }

@@ -31,7 +31,7 @@ export class AdminDepartureController {
     data.limit = data.limit || 10;
     data.page = data.page || 1;
     let d = await this.departureService.getAll(data);
-    console.log(req.user);
+
     res.render('admin/listTourDeparture', { d: d, data: data, user: req.user });
   }
 
@@ -63,7 +63,6 @@ export class AdminDepartureController {
   async getFlight(@Body() data) {
     const r = await this.departureService.getFlight(data);
 
-    console.log(1111111111111);
     return r;
     // res.render(`/admin-departure/${id}`, { result: f });
   }
@@ -71,7 +70,7 @@ export class AdminDepartureController {
   @Get('/create3')
   async saveFlight(@Query() data, @Res() res) {
     const r = await this.departureService.saveFlight(data);
-    console.log(1111111111111, data);
+
     res.redirect(`/admin-tour/tours/${data.id}`);
     // res.render(`/admin-departure/${id}`, { result: f });
   }
@@ -96,7 +95,7 @@ export class AdminDepartureController {
         keyword: word,
         subType: Amadeus.location.city,
       });
-      //   console.log(data);
+
       res.json(data);
     } catch (error) {
       console.error(error.response);

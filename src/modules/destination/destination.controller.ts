@@ -8,7 +8,7 @@ export class DestinationController {
   @Get()
   async listDestinations(@Res() res) {
     const des = await this.destinationService.getAll();
-    console.log(des);
+
     res.render('user/destination/listCountry', { des });
   }
 
@@ -21,7 +21,7 @@ export class DestinationController {
   })
   async DestinationDetail(@Param('id', ParseIntPipe) id, @Res() res) {
     const des = await this.destinationService.getDestinationById(id);
-    console.log(des);
+
     res.render('user/destination/showCountry', { des });
   }
 }

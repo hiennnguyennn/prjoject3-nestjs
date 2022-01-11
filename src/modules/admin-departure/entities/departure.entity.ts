@@ -1,3 +1,4 @@
+import { Ticket } from 'src/modules/tour/entities/ticket.entity';
 import { Tour } from 'src/modules/tour/entities/tour.entity';
 import { User } from 'src/modules/user/entity/user.entity';
 import {
@@ -6,6 +7,7 @@ import {
   CreateDateColumn,
   Entity,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
@@ -54,6 +56,11 @@ export class Departure extends BaseEntity {
     onDelete: 'CASCADE',
   })
   tour: Tour; //
+
+  @OneToMany(() => Ticket, (ticket) => ticket.departure, {
+    onDelete: 'CASCADE',
+  })
+  tickets: Ticket[]; //
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;

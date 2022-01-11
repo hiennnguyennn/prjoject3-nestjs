@@ -83,15 +83,11 @@ export class AdminDepartureService {
   }
 
   async getFlight(data) {
-    //console.log(11111, data);
     const amadeus = new Amadeus({
       clientId: process.env.API_KEY,
       clientSecret: process.env.API_SECRET,
     });
-    // let des = await this.destinationRepository.getDestinationbyId(
-    //   Number(data.to),
-    // );
-    //console.log(9999, data.fromDate);
+
     try {
       const flights = await amadeus.shopping.flightOffersSearch.get({
         originLocationCode: data.from,
@@ -103,7 +99,7 @@ export class AdminDepartureService {
         travelClass: data.travelClass,
         returnDate: data.toDate,
       });
-      console.log(flights.data.slice(0, 10));
+
       return flights.data.slice(0, 10);
     } catch (e) {
       console.log(e);

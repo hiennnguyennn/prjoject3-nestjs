@@ -8,6 +8,7 @@ import * as cookieParser from 'cookie-parser';
 import { ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import * as Amadeus from 'amadeus';
+import { isRFC3339 } from 'class-validator';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -43,7 +44,7 @@ async function bootstrap() {
   });
   hbs.registerHelper('changeStatus', function (a, b) {
     let tmp = a - b;
-    console.log(a, b, tmp);
+
     if (tmp === 0) return 'DISABLE';
     else if (tmp === 1) return 'ACTIVE';
   });
@@ -57,7 +58,8 @@ async function bootstrap() {
     else return 'Display';
   });
   hbs.registerHelper('select', function (selected, option) {
-    return selected == option ? 'selected="selected"' : '';
+    if (selected == option) return `checked`;
+    else return '';
   });
   hbs.registerHelper('isHot', function (a) {
     if (a === 0) return 'Add hot tour';
@@ -81,6 +83,19 @@ async function bootstrap() {
     else if (a === 1) return 'Pending';
     else if (a === 2) return 'On going';
     else if (a === 3) return 'Done';
+  });
+  hbs.registerHelper('dropdown', function (a, b) {
+    if (a) {
+      if (b == 'month') {
+        const today = new Date();
+        today.setMonth(a - 1);
+        return today.toLocaleString('default', { month: 'long' });
+      }
+      return a;
+    } else {
+      if (b === 'month') return 'Month';
+      else return 'Where to?';
+    }
   });
   app.set('view options', { layout: '../views/layouts/main' });
   app.setViewEngine('hbs');

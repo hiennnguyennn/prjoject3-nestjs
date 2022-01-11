@@ -1,19 +1,40 @@
-import { Controller, Get, Param, ParseIntPipe, Res } from '@nestjs/common';
-import { ApiParam } from '@nestjs/swagger';
-import { DestinationRepository } from '../destination/destination.repository';
-import { DestinationService } from '../destination/destination.service';
-import { UserRepository } from '../user/user.repository';
-import { UserService } from '../user/user.service';
-import { TourService } from './tour.service';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  ParseIntPipe,
+  Post,
+  Query,
+  Req,
+  Res,
+} from '@nestjs/common';
+import { ApiParam, ApiTags } from '@nestjs/swagger';
+import { Auth } from 'src/common/decorator/auth.decorator';
+import { BookTourDto } from './dto/book.dto';
 
+import { ListTourInUserDto } from './dto/list.dto';
+import { TourService } from './tour.service';
+@ApiTags('tours')
 @Controller('tours')
 export class TourController {
   constructor(private readonly tourService: TourService) {}
   @Get()
-  async getAll(@Res() res) {
-    const t = await this.tourService.getAll();
-    console.log(t);
-    res.render('user/tour/listTour', { tours: t });
+  async getAll(@Res() res, @Query() query: ListTourInUserDto) {
+    query.page = query.page || 1;
+    query.limit = query.limit || 10;
+    query.sortField = query.sortField || 'price';
+    query.sort = query.sort || 'asc';
+
+    let data = await this.tourService.getAll(query);
+
+    res.render('user/tour/listTour', {
+      tours: data.tours,
+      c: data.c,
+      des: data.des,
+      query: query,
+      desFilter: data?.desFilter?.name || '',
+    });
   }
   @Get('/:id')
   @ApiParam({
@@ -22,7 +43,7 @@ export class TourController {
     description: 'an integer for the tour id',
     schema: { type: 'integer' },
   })
-  async DestinationDetail(@Param('id', ParseIntPipe) id, @Res() res) {
+  async tourDetail(@Param('id', ParseIntPipe) id, @Res() res) {
     const tour = await this.tourService.getOne(id);
     tour['include'] = tour.included.split(';');
     tour['notInclude'] = tour.notIncluded.split(';');
@@ -30,7 +51,15 @@ export class TourController {
       tour.plans[i]['include'] = tour.plans[i].included.split(';');
       tour.plans[i]['notInclude'] = tour.plans[i].notIncluded.split(';');
     }
-    console.log(tour);
+    tour['showImage'] = tour.image.slice(0, 5);
     res.render('user/tour/showTour', { t: tour });
+  }
+  @Auth('user')
+  @Post('/book')
+  async bookTour(@Body() data: BookTourDto, @Req() req) {}
+  @Auth('user')
+  @Post('/review')
+  async reviewTour(@Body() data, @Req() req) {
+    return this.tourService.saveReview(data);
   }
 }

@@ -77,12 +77,11 @@ export class AuthService {
     }
   }
   async loginAdmin(data: LoginDto) {
-    console.log(111, data);
     const u = await this.userRepository.findUserByEmailAndRole(
       data.mail,
       [1, 2],
     );
-    console.log(222, u);
+
     if (u && (await bcrypt.compare(data.password, u.password))) {
       delete u.password;
       const payload = {

@@ -35,7 +35,7 @@ export class AdminTourController {
     data.limit = data.limit > 0 ? data.limit : 10;
     data.sort = data.sort ? data.sort : 'desc';
     const tour = await this.adminTourSerive.getList(data);
-    console.log(1111, tour);
+
     Res.render('admin/listTours', {
       result: tour,
       data: data,
@@ -88,7 +88,7 @@ export class AdminTourController {
     @Res() res,
   ) {
     //  return data;
-    console.log(data);
+
     const tour = await this.adminTourSerive.createTour(req.user, data, file);
     res.redirect(`/admin-tour/tours/${tour.id}`);
   }
@@ -103,19 +103,12 @@ export class AdminTourController {
   })
   async getTourDetail(@Param('tourId', ParseIntPipe) id, @Res() res) {
     let t = await this.adminTourSerive.tourDetail(id);
-    console.log(t);
+
     const firstImage = t['image'].shift();
     res.render('admin/tourDetail', {
       firstImage,
       t,
     });
-    // const d = await this.adminTourSerive.getDestinationDetail(id);
-    // console.log(d);
-    // const firstImage = d.image.shift();
-    // res.render('admin/destinationDetail', {
-    //   firstImage,
-    //   d,
-    // });
   }
 
   @Auth('manager')
@@ -163,7 +156,6 @@ export class AdminTourController {
     schema: { type: 'integer' },
   })
   async editHotTour(@Param('id', ParseIntPipe) id, @Res() res) {
-    console.log(id);
     const t = await this.adminTourSerive.editHotTour(id);
     res.redirect('back');
   }

@@ -27,12 +27,16 @@ export class AdminCategoryController {
     data.limit = data.limit > 0 ? data.limit : 10;
     data.sort = data.sort ? data.sort : 'asc';
     const result = await this.adminCategoryService.getList(data);
-    console.log(result);
+
     res.render('admin/listCategory', {
       data: data,
       result: result,
       user: req.user,
     });
+  }
+  @Get('/all')
+  async getAll() {
+    return this.adminCategoryService.getAll();
   }
 
   @Auth('manager')
@@ -89,9 +93,8 @@ export class AdminCategoryController {
     description: 'an integer for the category id',
   })
   async delete(@Param('id') id, @Res() Res: Response) {
-    console.log(2222222222);
     const c = await this.adminCategoryService.deleteCategory(id);
-    console.log(111111111111, c);
+
     Res.redirect('/admin-category/categories');
   }
 }

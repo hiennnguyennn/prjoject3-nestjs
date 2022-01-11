@@ -72,7 +72,6 @@ export class AppController {
     schema: { type: 'integer' },
   })
   async findByDesOrTourName(@Query('keyword') data: string) {
-    console.log(data);
     let t = await this.tourRepository.searchTour(data);
     let d = await this.destinationReository.search(data);
     let result = [];
@@ -84,7 +83,7 @@ export class AppController {
       d[i]['type'] = 'destination';
       result.push(d[i]);
     }
-    console.log(result);
+
     return result;
   }
 }

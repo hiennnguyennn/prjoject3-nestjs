@@ -98,7 +98,6 @@ export class AdminDestinationService {
       .where('destination.id= :id', { id: id })
       // .groupBy('destination.id')
       .getOne();
-    console.log(d);
 
     if (!d) throw new BadRequestException('NOT FOUND');
     else {

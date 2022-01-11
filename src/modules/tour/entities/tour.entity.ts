@@ -26,8 +26,8 @@ export class Tour extends BaseEntity {
   @Column({ nullable: false, name: 'description' })
   description: string;
 
-  @Column({ nullable: false, name: 'count' })
-  price: string;
+  @Column({ nullable: false, name: 'price' })
+  price: number;
 
   @Column({ nullable: true, name: 'minAge' })
   minAge: number;

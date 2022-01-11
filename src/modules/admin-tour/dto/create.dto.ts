@@ -53,10 +53,10 @@ export class CreateTourDto {
   readonly description: string;
 
   @ApiProperty({
-    type: String,
+    type: Number,
     description: 'tour price',
   })
-  price: string;
+  price: number;
 
   @ApiProperty({
     type: Number,

@@ -45,4 +45,7 @@ export class AdminCategoryService {
     const c = await this.categoryRepository.findOne(id);
     return this.categoryRepository.remove(c);
   }
+  async getAll() {
+    return this.categoryRepository.getAll();
+  }
 }

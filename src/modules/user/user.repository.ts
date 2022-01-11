@@ -101,14 +101,13 @@ export class UserRepository extends Repository<User> {
     return u;
   }
   async editUserRole(id, role) {
-    console.log(role.role);
     const u = await this.findUserById(id);
     if (!u) {
       throw new BadRequestException('USER NOT FOUND');
     }
     if (u.role !== Number(role.role)) {
       u.role = Number(role.role);
-      console.log(111, u);
+
       await u.save();
       return u;
     } else
@@ -138,5 +137,15 @@ export class UserRepository extends Repository<User> {
       users.orderBy(`user.name`, 'ASC');
     } else users.orderBy(`user.name`, 'DESC');
     return paginateRaw<User>(users, { limit: data.limit, page: data.page });
+  }
+  async getMyInfo(id: number) {
+    return this.createQueryBuilder('user')
+      .where('user.id=:id', { id: id })
+      .select('user')
+      .addSelect('user.id_card')
+      .addSelect('user.dob')
+      .addSelect('user.phone')
+      .addSelect('user.address')
+      .getOne();
   }
 }

@@ -55,6 +55,8 @@ export class DestinationRepository extends Repository<Destination> {
       .addSelect('destination.id')
       .addSelect('destination.country')
       .addSelect('destination.image')
+      .orderBy('destination.name', 'ASC')
+
       .getMany();
   }
   async search(data: string) {

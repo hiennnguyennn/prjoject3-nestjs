@@ -27,7 +27,7 @@ export class AdminUserController {
 
     data.sort = data.sort ? data.sort : 'asc';
     const u = await this.adminUserService.getListUser(data);
-    console.log(u);
+
     Res.render('admin/listUser', { user: req.user, result: u, data: data });
   }
 
@@ -73,7 +73,7 @@ export class AdminUserController {
   })
   async changeUserStatus(@Param('id', ParseIntPipe) id, @Res() res) {
     const u = await this.adminUserService.editUserStatus(id);
-    console.log(111, id, u);
+
     res.redirect(`/admin-user/users/${id}`);
   }
 

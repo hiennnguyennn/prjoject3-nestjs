@@ -10,9 +10,8 @@ export class AdminUserService {
     return this.userRepository.editUserRole(id, role);
   }
   async editUserStatus(id) {
-    console.log(id);
     let u = await this.userRepository.findUserById(id);
-    console.log(u);
+
     u.status = 1 - u.status;
     await u.save();
     return u;
