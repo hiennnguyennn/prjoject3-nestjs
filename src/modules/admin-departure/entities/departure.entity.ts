@@ -20,7 +20,7 @@ export class Departure extends BaseEntity {
   max: number; //
 
   @Column({ nullable: false, name: 'status' })
-  status: number; //0:disable, 1: pending,2: on going, 3: done
+  status: number; // 1: pending,2: on going, 3: done
 
   @Column({ nullable: false, name: 'start' })
   start: Date; //

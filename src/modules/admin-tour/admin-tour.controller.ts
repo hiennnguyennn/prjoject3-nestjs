@@ -159,4 +159,15 @@ export class AdminTourController {
     const t = await this.adminTourSerive.editHotTour(id);
     res.redirect('back');
   }
+  @Post('/editStatus/:id')
+  @ApiParam({
+    name: 'id',
+    required: true,
+    description: 'an integer for the tour id',
+    schema: { type: 'integer' },
+  })
+  async editStatus(@Param('id', ParseIntPipe) id, @Res() res) {
+    const t = await this.adminTourSerive.editStatus(id);
+    res.redirect('back');
+  }
 }

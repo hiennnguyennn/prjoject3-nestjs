@@ -1,0 +1,106 @@
+<div class="admin-list create">
+
+    {{>admin_header}}
+    {{>adminNavigation}}
+    <div class="content">
+        <h2>Create Tour Departure (1)</h2>
+        <span class="create"><a href="/admin-departure/departures">
+                < Back</a></span>
+        <form method="POST" action="/admin-departure/create">
+            <div class="row">
+                <div class="col">
+                    <label for="max">Max peoole</label>
+                    <input name="max" id="max" type="number" class="form-control" placeholder="Enter max people"
+                        value="{{d.max}}">
+
+                    <div class="d-e">{{err}}</div>
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+                <div class="col">
+                    <label for="tour">Tour</label>
+                    <select style="height: 37px;" class="form-control value" name="tour" id="des">
+                        {{#each tours}}
+                        <option value={{this.id}}>{{this.name}}</option>
+                        {{/each}}
+                    </select>
+
+
+                </div>
+            </div>
+
+            <div class="form-group" style="width: 40%;">
+                <label for="dateStart">Date start</label>
+                <input type="date" class="form-control" name="start" value="{{d.dateStart}}">
+                <div class="d-e">Error</div>
+                <i class="fas fa-exclamation-triangle"></i>
+
+            </div>
+            {{!--
+            <div class="row">
+                <div class="col">
+                    <label for="language">Flight</label>
+                    <input type="date" class="form-control" name="language" value="{{c.language}}">
+                    <div class="d-e">Error</div>
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+                <div class="col">
+                    <label for="currency">Hotal</label>
+                    <input type="text" class="form-control" name="currency" value="{{c.currency}}">
+                    <div class="d-e">Error</div>
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+            </div> --}}
+
+
+            <button type="submit" class=" btn btn-primary">Next</button>
+        </form>
+    </div>
+</div>
+
+<script>
+
+    const submit = document.querySelector('.btn');
+    const form = document.querySelector('form');
+
+    var e = document.querySelectorAll('.value');
+
+    var err = false;
+    function vali(element) {
+        if (element.value.length === 0) {
+
+            element.parentElement.classList.add('error');
+            var x = element.getAttribute("name");
+            if (x === "des") x = "description";
+            else if (x === "intro") x = "introduce";
+            x = x[0].toUpperCase() + x.slice(1) + " must not be null";
+            element.nextElementSibling.innerHTML = x;
+            err = true;
+        }
+        else err = false;
+    };
+
+    form.onsubmit = function (a) {
+        var sub = false;
+
+        e.forEach(function (value, index) {
+            vali(value);
+        });
+
+        if (err) a.preventDefault();
+
+    };
+    e.forEach(function (value, index) {
+        value.onfocus = function (e) {
+            e.target.parentElement.classList.remove('error');
+        }
+    });
+    e.forEach(function (value, index) {
+        value.onfocusout = function (e) {
+            vali(e.target);
+        }
+    });
+
+
+
+
+</script>

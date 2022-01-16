@@ -1,0 +1,107 @@
+<div class="admin-list">
+
+    {{>admin_header}}
+    {{>adminNavigation}}
+    <div class="content">
+        <h2>List Category</h2>
+        <span class="create"><a href="/admin-category/create-category">Create Category</a></span>
+        <table class="table table-hover table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">No</th>
+                    <th scope="col">Created Date</th>
+                    <th scope="col">Category name <a class="sort"><i class="fas fa-sort"></i></a></th>
+                    <th scope="col">Creator</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each result.items}}
+                <tr id={{this.category_id}}>
+                    <th scope="row">{{sum @index 1}}</th>
+                    <td>{{date this.category_created_at}}</td>
+                    <td>{{this.category_name}}</td>
+                    <td>{{this.creator_name}}</td>
+                    <td><a href='/admin-category/categories/edit/{{this.category_id}}'>Edit</a>
+                        <form style="display: inline;" method="post"
+                            action='/admin-category/categories/delete/{{this.category_id}}'><button
+                                style="border: none; background-color: white; color: red;">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                {{/each}}
+
+            </tbody>
+        </table>
+        <select class="limit">
+            <option value="10" selected="selected" hidden="hidden">10/pages</option>
+            <option value="12">12/pages</option>
+            <option value="15">15/pages</option>
+        </select>
+        <nav aria-label="Page navigation example" style="position: absolute;bottom:15px;right:50px;margin-bottom: 0px;">
+            <ul class="pagination">
+                <li class="page-item">
+                    <a class="page-link"
+                        href="/admin-category/categories?search={{data.search}}&sort={{data.sort}}&limit={{data.limit}}&page={{sum result.meta.currentPage -2}}">Previous</a>
+                </li>
+                <li class="page-item"><a class="page-link"
+                        href="/admin-category/categories?search={{data.search}}&sort={{data.sort}}&limit={{data.limit}}&page={{sum result.meta.currentPage -1}}"
+                        name="page" value="{{sum result.meta.currentPage -1}}">{{sum result.meta.currentPage -1}}</a>
+                </li>
+                <li class="page-item active" aria-current="page">
+                    <span class="page-link">{{result.meta.currentPage}}</span>
+                </li>
+                <li class="page-item"><a class="page-link"
+                        href="/admin-category/categories?search={{data.search}}&sort{{data.sort}}&limit={{data.limit}}&page={{sum result.meta.currentPage 1}}"
+                        name="page" value="{{sum result.meta.currentPage 1}}">{{sum result.meta.currentPage 1}}</a></li>
+                <li class="page-item">
+                    <a class="page-link"
+                        href="/admin-category/categories?search={{data.search}}&sort{{data.sort}}&limit={{data.limit}}&page={{sum result.meta.currentPage 2}}">Next</a>
+                </li>
+        </nav>
+    </div>
+</div>
+
+<script>
+    const maxPage = {{ result.meta.totalPages }};
+    const limit = {{ result.meta.itemsPerPage }};
+    const page = {{ result.meta.totalPages }};
+
+    var pageLoad = document.getElementsByClassName('page-item');
+
+    if (pageLoad[1].innerText == 0 || pageLoad[1].innerText < 0) {
+        pageLoad[0].classList.add('none');
+        pageLoad[1].classList.add('none');
+    };
+    if (pageLoad[1].innerText == 1) {
+        pageLoad[0].classList.add('none')
+    };
+    if (pageLoad[2].innerText == maxPage | pageLoad[2].innerText > maxPage) {
+        pageLoad[3].classList.add('none');
+        pageLoad[4].classList.add('none');
+    };
+    if (pageLoad[3].innerText == maxPage) {
+        pageLoad[4].classList.add('none');
+    };
+    pageLoad[1].onclick = function (e) {
+        form.submit();
+    }
+    pageLoad[3].onclick = function (e) {
+        form.submit();
+    };
+    var create = document.querySelector('.create');
+    let u = "{{ user.role }}"; u = parseInt(u);
+    if (u !== 2) {
+        create.classList.add('hide')
+    }
+    const sort = document.querySelector('.sort');
+    let currentSort = "{{ data.sort }}";
+    let href;
+    sort.onclick = function (e) {
+        if (currentSort === 'desc') href = `/admin-category/categories?sort=asc`
+        else href = `/admin-category/categories?sort=desc`;
+
+        window.location.replace(href)
+    }
+
+</script>

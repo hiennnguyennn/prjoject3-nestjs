@@ -112,4 +112,9 @@ export class AdminDepartureController {
     await this.departureService.delete(id);
     res.redirect('back');
   }
+  @Post('/departures/editStatus')
+  async editStatus(@Body() data, @Res() res) {
+    let save = await this.departureService.edit(data);
+    res.redirect('back');
+  }
 }

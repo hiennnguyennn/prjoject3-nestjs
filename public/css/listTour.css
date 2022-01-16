@@ -1,0 +1,288 @@
+.tour-list {
+  padding-top: 130px;
+}
+.tour-list .slider {
+  position: relative;
+}
+.tour-list .slider .slider-img {
+  width: 100%;
+  height: 520px;
+  background-image: url('/image/web/list-tour.jpg');
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  opacity: 1;
+  align-items: center;
+  filter: blur(0.7px) contrast(120%) brightness(70%);
+
+  z-index: 0;
+}
+.tour-list .slider h1 {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+}
+.tour-list .body-container {
+  background-color: white;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.tour-list .body-container .body {
+  width: 85vw;
+  background-color: #f8f8f8;
+  z-index: 1;
+  box-shadow: 0 3px 20px 5px rgba(0, 0, 0, 0.07);
+  clear: both;
+  margin-top: -80px;
+  display: flex;
+  flex-wrap: wrap;
+  clear: both;
+  margin-top: -80px;
+}
+.tour-list .body-container .body-header {
+  list-style-type: none;
+  height: 80px;
+  display: flex;
+  justify-content: space-around;
+  margin: 0px;
+  background-color: #e7e4e4;
+  width: 100%;
+  margin-top: 0px;
+  margin-bottom: 50px;
+  padding: 0;
+}
+.tour-list .body-container .body-header ul .col {
+  margin: 0;
+  padding: 0;
+  display: inline;
+}
+.tour-list .body-container ul li a {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  font-weight: 600;
+  text-align: center;
+  justify-content: center;
+}
+.tour-list .body-container i {
+  margin-right: 10px;
+}
+.tour-list .body-container ul .col:hover {
+  opacity: 1;
+  background-color: white;
+  color: #3fd0d4;
+}
+.tour-list .body-container ul a:hover {
+  text-decoration: none;
+  color: #3fd0d4;
+}
+.tour-list .body-container .none {
+  display: none;
+}
+.tour-list .home-pagination {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 0px;
+}
+.tour-list .body-container .body-content {
+  padding: 0 50px;
+  display: flex;
+  gap: 50px;
+  width: 100%;
+}
+
+.tour-list .body-container .body-content .tours {
+  width: 75%;
+  position: relative;
+  padding-bottom: 50px;
+}
+.tour-list .body-container .body-content .tour {
+  width: 100%;
+  background-color: white;
+  display: flex;
+  margin-bottom: 30px;
+}
+.tour-list .body-container .body-content .tour > div {
+  width: 50%;
+  overflow: hidden;
+}
+.tour-list .body-container .body-content .tour img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.tour-list .body-container .body-content .tour img:hover {
+  animation: image 3s 1;
+  transform: scale(1.2, 1.2);
+  overflow: hidden;
+  object-fit: cover;
+}
+@keyframes image {
+  0% {
+    transform: scale(1, 1);
+    object-fit: cover;
+  }
+}
+.tour-list .body-container .body-content .tour > div:last-child {
+  padding: 41px 50px;
+}
+.tour-list .body-container .body-content .tour h4 a {
+  font-weight: 600;
+  font-size: 22px;
+  line-height: 20px;
+}
+.tour-list .body-container .body-content .tour p {
+  margin: 20px 0;
+  font-weight: 600;
+}
+.tour-list .body-container .body-content .tour .des {
+  color: #505050;
+  margin: 20px 0;
+  font-size: 14px;
+  font-weight: 500;
+}
+.tour-list .body-content .info-sold-age {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.tour-list .body-content .info-sold-age div {
+  background-color: #3fd0d4;
+  color: white;
+  padding: 8px 20px;
+}
+.tour-list .body-content .filter {
+  width: 25%;
+  color: white;
+}
+.tour-list .body-content .filter .filter-content {
+  background-color: #3fd0d4;
+  padding: 40px 20px;
+}
+.tour-list .body-container .filter h4 {
+  font-weight: 600;
+  font-size: 22px;
+  line-height: 20px;
+  color: white;
+}
+.tour-list .body-container .filter p {
+  margin-top: 6px;
+  margin-bottom: 22px;
+}
+.tour-list .body-container .filter .first input {
+  background-color: #6fdcdf;
+  color: white;
+  width: 100%;
+  border: none;
+  border-radius: 0;
+  padding: 16px 24px 16px 43px;
+  margin-bottom: 5px;
+}
+.tour-list .body-container .filter .first {
+  margin-bottom: 30px;
+}
+.tour-list .body-container .filter .first input::placeholder {
+  /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: white;
+  opacity: 1; /* Firefox */
+}
+
+.tour-list .body-container .filter .first input:-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
+  color: white;
+}
+
+.tour-list .body-container .filter .first input::-ms-input-placeholder {
+  /* Microsoft Edge */
+  color: white;
+}
+.tour-list .body-container .filter .second div {
+  display: block;
+  margin-bottom: 9px;
+}
+.tour-list .body-container .filter .second h5 {
+  margin-bottom: 20px;
+}
+.tour-list .body-container .filter .second div input {
+  outline: none;
+  color: white;
+  margin-right: 10px;
+}
+.tour-list .body-container button {
+  width: 100%;
+  color: black;
+  background-color: white;
+  padding: 15px 5px;
+  border: none;
+  font-weight: 600;
+  margin: 15px 0;
+}
+.tour-list .body-container .body-header .h-active {
+  background-color: white;
+  color: #3fd0d4;
+}
+.tour-list .body-container .body-header .hide {
+  display: none;
+}
+.tour-list .drop {
+  position: relative;
+
+  background-color: #6fdcdf;
+  color: white;
+  width: 100%;
+  border: none;
+  border-radius: 0;
+  padding: 16px 24px 16px 43px;
+  margin-bottom: 5px;
+}
+
+.tour-list .drop span {
+  /* height: 100%; */
+  width: 100%;
+  /* padding: 16px 0px 16px 53px; */
+  display: flex;
+  flex: 0 0 100%;
+  align-items: center;
+}
+.tour-list .drop ul {
+  display: none;
+  background-color: white;
+  list-style-type: none;
+  position: absolute;
+  /* height: 200px; */
+  color: #8e8e8e;
+  overflow: auto;
+  left: 0;
+  right: 0;
+  box-shadow: 0 3px 13px 0 rgba(0, 0, 0, 0.03);
+  top: 60px;
+  width: 100%;
+  padding: 2px 22px;
+  padding-top: 10px;
+  z-index: 5;
+}
+.tour-list .drop ul.month {
+  height: 200px;
+}
+.tour-list .drop ul li {
+  padding: 7px 0;
+  color: #8e8e8e;
+  cursor: pointer;
+}
+.tour-list form button {
+  background-color: #3fd0d4;
+  height: 100%;
+  width: 16%;
+  padding: 28px 10px;
+  height: 100%;
+  border: none;
+}
+.tour-list .drop .shows {
+  display: block;
+}

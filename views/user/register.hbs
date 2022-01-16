@@ -1,0 +1,172 @@
+{{>header}}
+<div class="register">
+    {{!-- <div class="form-create">
+
+        <form method="POST" enctype="multipart/form-data" action="/store">
+            <h1>Register</h1>
+            <p class="login">If you already have account, please go to <a href="/login">Login</a></p>
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" name="name" value="{{p.name}}">
+                <div class="d-e">Error</div>
+                <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" name="email" value="{{p.email}}">
+                <div class="d-e">{{err}}</div>
+                <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <div class="form-group">
+                <label for="dob">Day of birth</label>
+                <input type="date" class="form-control" name="dob" value="{{p.dob}}">
+                <div class="d-e">Error</div>
+                <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <div class="form-group">
+                <label for="pass">Password</label>
+                <input type="password" class="form-control" name="pass"
+                    placeholder="Password must at least 6 characters" value="{{p.pass}}">
+                <div class="d-e">Error</div>
+                <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <div class="form-group">
+                <label for="re-pass">Confirm Password</label>
+                <input type="password" class="form-control" name="re-pass">
+                <div class="d-e">Error</div>
+                <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <div class="form-check">
+                <div>
+                    <input class="form-check-input" type="radio" name="part" id="admin" value="admin">
+                    <label class="form-check-label" for="admin">
+                        Admin
+                    </label>
+                </div>
+                <div>
+                    <input class="form-check-input" id="user" type="radio" name="part" value="user" checked>
+                    <label class="form-check-label" for="user">
+                        User
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="avatar">Choose your avatar</label>
+                <input type="file" name="avatar" multiple="multiple" class="form-control-file">
+            </div>
+
+            <button type="submit" class=" btn btn-primary">Submit</button>
+        </form>
+    </div> --}}
+    <div class="container">
+        <div class="left">
+            <div class="title">Register</div>
+            <div class="eula">By registering in you agree to the ridiculously long terms that you didn't bother to
+                read.<br>If you have account, please <a href="/auth/login">Login</a> first
+            </div>
+        </div>
+        <div class="right">
+
+            <form class="form" method="POST" action="/auth/register">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" class="form-control in" name="mail" value="{{p.mail}}">
+                    <div class="line"></div>
+                    <div class="d-e">{{errs}}</div>
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+                <div class="form-group">
+                    <label for="name">Username</label>
+                    <input type="text" class="form-control in" name="name" value="{{p.name}}">
+                    <div class="line"></div>
+                    <div class="d-e">{{err}}</div>
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control in" name="password" value="{{p.password}}">
+                    <div class="line"></div>
+                    <div class="d-e">{{err}}</div>
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+                <div class="form-group">
+                    <label for="pass">Confirm password</label>
+                    <input type="password" class="form-control in" name="re-pass" value="{{p.re-pass}}">
+                    <div class="line"></div>
+                    <div class="d-e">{{err}}</div>
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+
+                <button class="submit" disabled>SUBMIT</button>
+
+            </form>
+        </div>
+    </div>
+</div>{{>footer}}
+<script>
+    const submit = document.querySelector('button');
+    const form = document.querySelector('form');
+
+    var e = document.querySelectorAll('.in');
+    /* e[0] = document.querySelector('input[name="email"]');
+     e[1] = document.querySelector('input[name="pass"]');*/
+    /*if (e[0].value != "") {
+        e[0].parentElement.classList.add('error');
+    };
+    if (e[1].value != "") {
+        e[1].parentElement.classList.add('error');
+    }*/
+    var error = document.querySelectorAll('.d-e');
+
+    function vali(element, index) {
+        if (index === 4) {
+            if (element.value !== e[3].value) {
+                element.parentElement.classList.add('error');
+                error[index].innerHTML = 'Confirm password must same password'; err = true;
+            }
+        }
+        else if (element.value.length === 0) {
+            element.parentElement.classList.add('error');
+            var x = element.getAttribute("name");
+            x = x[0].toUpperCase() + x.slice(1) + " must not be null";
+            error[index].innerHTML = x;
+            // element.nextElementSibling.innerHTML = x;
+            err = true;
+        }
+        else if (index === 3) {
+            if (element.value.length < 3) {
+                element.parentElement.classList.add('error');
+                error[index].innerHTML = 'Password at least 3 character'; err = true;
+            }
+        }
+
+        else {
+            err = false;
+
+            submit.disabled = false;
+            submit.classList.add('active')
+
+        }
+    };
+    form.onsubmit = function (a) {
+        var sub = false;
+        e.forEach(function (value, index) {
+            vali(value, index);
+        });
+
+        if (err) a.preventDefault();
+
+    };
+    e.forEach(function (value, index) {
+        value.onfocus = function (e) {
+            e.target.parentElement.classList.remove('error');
+        }
+    });
+    e.forEach(function (value, index) {
+        value.onfocusout = function (e) {
+            vali(e.target, index);
+        }
+    });
+
+</script>

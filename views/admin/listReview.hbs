@@ -1,0 +1,142 @@
+<div class="admin-list">
+
+    {{>admin_header}}
+    {{>adminNavigation}}
+    <div class="content">
+        <h2>Review Listing</h2>
+        <table class="table table-hover table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Created Date</th>
+                    <th scope="col">Rate</th>
+                    <th scope="col">Tour name</th>
+                    <th scope="col">Owner</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each reviews.items}}
+                <tr class="review-detail" data-user={{name this.owner_name}} data-id={{this.review_id}}
+                    data-rate={{this.review_rate}} data-message={{name this.review_message}} data-tour={{name
+                    this.tour_name}}>
+                    <th scope="row">{{this.review_id}}</th>
+                    <td>{{date this.review_created_at}}</td>
+                    <td>{{this.review_rate}}/5</td>
+                    <td>{{this.tour_name}}</td>
+                    <td>{{this.owner_name}}</td>
+                    {{!-- <td class="review-detail" onclick="openForm1()">View Detail</td> --}}
+                </tr>
+                {{/each}}
+
+            </tbody>
+        </table>
+        <select class="limit">
+            <option value="10" selected="selected" hidden="hidden">10/pages</option>
+            <option value="12">12/pages</option>
+            <option value="15">15/pages</option>
+        </select>
+        <nav aria-label="Page navigation example" style="position: absolute;bottom:15px;right:50px;margin-bottom: 0px;">
+            <ul class="pagination">
+                <li class="page-item">
+                    <a class="page-link"
+                        href="/admin-review/reviews?search={{data.search}}&sort={{data.sort}}&limit={{data.limit}}&page={{sum reviews.meta.currentPage -2}}">Previous</a>
+                </li>
+                <li class="page-item"><a class="page-link"
+                        href="/admin-review/reviews?search={{data.search}}&sort={{data.sort}}&limit={{data.limit}}&page={{sum reviews.meta.currentPage -1}}"
+                        name="page" value="{{sum reviews.meta.currentPage -1}}">{{sum reviews.meta.currentPage -1}}</a>
+                </li>
+                <li class="page-item active" aria-current="page">
+                    <span class="page-link">{{reviews.meta.currentPage}}</span>
+                </li>
+                <li class="page-item"><a class="page-link"
+                        href="/admin-review/reviews?search={{data.search}}&sort{{data.sort}}&limit={{data.limit}}&page={{sum reviews.meta.currentPage 1}}"
+                        name="page" value="{{sum reviews.meta.currentPage 1}}">{{sum reviews.meta.currentPage 1}}</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link"
+                        href="/admin-review/reviews?search={{data.search}}&sort{{data.sort}}&limit={{data.limit}}&page={{sum reviews.meta.currentPage 2}}">Next</a>
+                </li>
+        </nav>
+    </div>
+</div>
+<script>
+    const maxPage = {{ reviews.meta.totalPages }};
+    const limit = {{ reviews.meta.itemsPerPage }};
+    const page = {{ reviews.meta.totalPages }};
+
+    var pageLoad = document.getElementsByClassName('page-item');
+
+    if (pageLoad[1].innerText == 0 || pageLoad[1].innerText < 0) {
+        pageLoad[0].classList.add('none');
+        pageLoad[1].classList.add('none');
+    };
+    if (pageLoad[1].innerText == 1) {
+        pageLoad[0].classList.add('none')
+    };
+    if (pageLoad[2].innerText == maxPage | pageLoad[2].innerText > maxPage) {
+        pageLoad[3].classList.add('none');
+        pageLoad[4].classList.add('none');
+    };
+    if (pageLoad[3].innerText == maxPage) {
+        pageLoad[4].classList.add('none');
+    };
+    pageLoad[1].onclick = function (e) {
+        form.submit();
+    }
+    pageLoad[3].onclick = function (e) {
+        form.submit();
+    };
+    let tours = document.querySelectorAll('.admin-list .review-detail');
+    for (var i = 0; i < tours.length; i++) {
+        let tour = tours[i].dataset.tour.split("-").join(" ");
+        let rate = tours[i].dataset.rate;
+        let message = tours[i].dataset.message.split("-").join(" ");
+        let user = tours[i].dataset.user.split("-").join(" ");
+        console.log(10)
+        tours[i].innerHTML = tours[i].innerHTML + `<td onclick="openForm1()"  style="cursor: pointer;">View detail</td>`;
+        document.querySelector('.admin-list').outerHTML = document.querySelector('.admin-list').outerHTML + `<div class="form-popup" id="myForm1">
+    <form action="/admin-ticket/tickets/editStatus" method="post" class="form-container">
+       <h5>${user} review tour ${tour}</h5>
+        <div class="leaderboard__value" style="margin-top:20px">
+                                <div class="rating1">
+
+                                    <i class="far fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </div>
+                            </div>
+                            <p class="message" style="margin-top:10px">Message: ${message}</p>
+                            <div class="button-group">
+            
+            <button type="button" class="btn cancel" onclick="closeForm1()">Close</button>
+        </div>
+    </form>
+</div>`
+
+
+
+    }
+    function openForm1() {
+        document.querySelector('.admin-list').classList.add('blur')
+        document.getElementById("myForm1").style.display = "block";
+        document.getElementById("myForm1").style.filter = "blur(0px)"
+
+
+    }
+
+    function closeForm1() {
+        document.querySelector('.admin-list').classList.remove('blur')
+        document.getElementById("myForm1").style.display = "none";
+    }
+    let reviews = document.querySelectorAll('.review-detail'); let star = document.querySelectorAll('.rating1 .fa-star');
+    for (var i = 0; i < tours.length; i++) {
+        let rate = Number(tours[i].dataset.rate);
+        console.log(11111, rate)
+        for (var j = 5 * i; j < 5 * i + rate; j++) {
+            star[j].classList.add('star-active')
+        }
+    }
+</script>

@@ -1,0 +1,31 @@
+{{>header}}
+<div class="list_destinaion">
+    <div class="slide-container">
+        <div class="slider">
+        </div>
+        <h1>Destination List</h1>
+    </div>
+    <div class="body-container">
+        <div class="body">
+            {{#each des}}
+            <a href="/destinations/{{this.id}}">
+                <img src="file/destinations/{{this.image.[0]}}">
+                <p>{{this.name}}</p>
+            </a>
+            {{/each}}
+            {{!-- <a>
+                <img src="/image/web/create_country1.jpg">
+                <p>Taiwan</p>
+            </a>
+            <a>
+                <img src="/image/web/create_country1.jpg">
+                <p>Taiwan</p>
+            </a>
+            <a>
+                <img src="/image/web/create_country1.jpg">
+                <p>Taiwan</p>
+            </a> --}}
+        </div>
+    </div>
+</div>
+{{>footer}}

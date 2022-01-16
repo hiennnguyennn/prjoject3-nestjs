@@ -61,6 +61,10 @@ async function bootstrap() {
     if (selected == option) return `checked`;
     else return '';
   });
+  hbs.registerHelper('star', function (a) {
+    if (a) return a;
+    else return null;
+  });
   hbs.registerHelper('isHot', function (a) {
     if (a === 0) return 'Add hot tour';
     else if (a === 1) return 'Remove hot tour';
@@ -84,6 +88,11 @@ async function bootstrap() {
     else if (a === 2) return 'On going';
     else if (a === 3) return 'Done';
   });
+  hbs.registerHelper('rate', function (a) {
+    if (a) {
+      return round(Number(a), 1);
+    } else return 5;
+  });
   hbs.registerHelper('dropdown', function (a, b) {
     if (a) {
       if (b == 'month') {
@@ -97,6 +106,39 @@ async function bootstrap() {
       else return 'Where to?';
     }
   });
+  hbs.registerHelper('soldMax', function (a, b) {
+    return a + '/' + b;
+  });
+  hbs.registerHelper('money', function (a, b) {
+    return a * b;
+  });
+  hbs.registerHelper('timeStartToEnd', function (a, b) {
+    a = a.toString();
+    let tmp = a.split(' ').slice(0, 5);
+    tmp.join(' ');
+    b = b.toString();
+    let tmp1 = b.split(' ').slice(0, 5);
+    tmp1.join(' ');
+    return tmp + '->' + tmp1;
+  });
+  hbs.registerHelper('statusTicket', function (a) {
+    if (a === 0) return 'Pending';
+    else if (a === 1) return 'Confirm';
+    else if (a === 2) return 'On tour';
+    else if (a === 3 || a === 4) return 'Used';
+    else if (a === 5) return 'Canceled';
+  });
+  hbs.registerHelper('name', function (a) {
+    return a.split(' ').join('-');
+  });
+  hbs.registerHelper('message', function (a) {
+    if (a) return 'Message: ';
+    else return '';
+  });
+  function round(n, dp) {
+    const h = +'1'.padEnd(dp + 1, '0'); // 10 or 100 or 1000 or etc
+    return Math.round(n * h) / h;
+  }
   app.set('view options', { layout: '../views/layouts/main' });
   app.setViewEngine('hbs');
 

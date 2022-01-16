@@ -1,0 +1,251 @@
+.editUser {
+  padding: 130px 0 0 0;
+  margin: 0 70px 150px 70px;
+  box-shadow: 0 3px 13px 0 rgba(0, 0, 0, 0.03);
+}
+.editUser .form-create {
+  display: flex;
+  width: 100%;
+}
+.editUser .info {
+  width: 70%;
+  padding: 50px 20px 100px 20px;
+}
+.editUser .userInfo form {
+  width: 100%;
+
+  margin-top: 30px;
+  background-color: white;
+
+  opacity: 0.9;
+}
+.editUser h1 {
+  text-align: center;
+  margin-bottom: 20px;
+  display: inline-block;
+  font-weight: 600;
+  width: 100%;
+  text-align: center;
+}
+.editUser form > div {
+  margin-top: 20px;
+  width: 100%;
+  position: relative;
+}
+.editUser .userInfo button {
+  margin-top: 30px;
+  background-color: #3fd0d4;
+  border: none;
+  width: 100%;
+  padding: 20px;
+  opacity: 2;
+  font-size: 1.3rem;
+}
+.editUser form textarea {
+  resize: none;
+  height: 100px;
+}
+
+.editUser form input {
+  position: relative;
+}
+.editUser form i {
+  position: absolute;
+  top: 40px;
+  right: 30px;
+  color: red;
+  display: none;
+}
+.editUser form div .d-e {
+  margin-top: 3px;
+  font-size: 14px;
+  color: red;
+  margin-left: 5px;
+  display: none;
+}
+.editUser form .error .d-e {
+  display: block;
+}
+.editUser form .error i {
+  display: block;
+}
+.editUser form .error input {
+  border: 1px solid red;
+}
+.editUser .body-header {
+  list-style-type: none;
+  height: 80px;
+  display: flex;
+  justify-content: space-around;
+  margin: 0px;
+  background-color: #f8f8f8;
+  width: 100%;
+  margin-top: 0px;
+}
+.editUser .body-header ul .col {
+  margin: 0;
+  padding: 0;
+  display: inline;
+}
+.editUser .body-header .h-active {
+  background-color: white;
+}
+.editUser .body-header li {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  font-weight: 600;
+  text-align: center;
+  justify-content: center;
+  padding: 0;
+  cursor: pointer;
+}
+.editUser .body-header li:hover {
+  background-color: white;
+}
+.editUser .info.hide {
+  display: none;
+}
+.editUser .info ul {
+  counter-reset: index;
+  padding: 0;
+  height: 65vh;
+  overflow-y: scroll;
+
+  margin-top: 20px;
+}
+
+/* List element */
+.editUser .info li {
+  counter-increment: index;
+  display: flex;
+  text-align: left;
+  font-size: 16px;
+  padding: 12px 0;
+  box-sizing: border-box;
+  height: auto;
+  position: relative;
+  padding-bottom: 70px;
+}
+
+/* Element counter */
+.editUser .info li::before {
+  content: counters(index, '.', decimal-leading-zero);
+  font-size: 1.5rem;
+  text-align: left;
+  font-weight: bold;
+  max-width: 50px;
+  padding-right: 10px;
+  font-feature-settings: 'tnum';
+  font-variant-numeric: tabular-nums;
+  align-self: flex-start;
+  background-image: linear-gradient(to bottom, aquamarine, orangered);
+  background-attachment: fixed;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Element separation */
+.editUser .info li + li {
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+.editUser .info li .time {
+  font-size: 13px;
+  position: absolute;
+  bottom: 30px;
+  left: 38px;
+}
+.editUser .info li .statusAndMoney {
+  font-size: 13px;
+  position: absolute;
+  bottom: 0px;
+  left: 38px;
+}
+.editUser .info li form {
+}
+.editUser .info li .review {
+  border: none;
+  position: absolute;
+  right: 30px;
+  padding: 5px 10px;
+  background-color: #3fd0d4;
+  color: white;
+}
+.enableBlur > * {
+  /* -webkit-filter: blur(2px);
+  -moz-filter: blur(2px);
+  -o-filter: blur(2px);
+  -ms-filter: blur(2px);
+  filter: blur(2px); */
+  filter: blur(1.2px);
+}
+.disableBlur {
+  filter: blur(0);
+}
+
+.editUser .tourInfo .form-popup {
+  top: 40%;
+}
+.editUser .tourInfo .form-popup input {
+  margin: 10px auto;
+}
+.rating-css {
+  display: flex;
+  margin-bottom: 15px;
+}
+.rating-css div {
+  margin: auto 5px;
+}
+.rating-css input {
+  display: none;
+}
+.rating-css input + label {
+  color: #ffe400;
+  font-size: 20px;
+  text-shadow: 1px 1px 0 #ffe400;
+  cursor: pointer;
+}
+.rating-css input:checked + label ~ label {
+  color: #838383;
+}
+.rating-css label:active {
+  transform: scale(0.8);
+  transition: 0.3s ease;
+}
+#rating {
+  border: none;
+  float: left;
+}
+#rating > input {
+  display: none;
+} /*ẩn input radio - vì chúng ta đã có label là GUI*/
+#rating > label:before {
+  margin: 5px;
+  font-size: 1.25em;
+  font-family: FontAwesome;
+  display: inline-block;
+  content: '\f005';
+} /*1 ngôi sao*/
+#rating > .half:before {
+  content: '\f089';
+  position: absolute;
+} /*0.5 ngôi sao*/
+#rating > label {
+  color: #ddd;
+  float: right;
+} /*float:right để lật ngược các ngôi sao lại đúng theo thứ tự trong thực tế*/
+/*thêm màu cho sao đã chọn và các ngôi sao phía trước*/
+#rating > input:checked ~ label,
+#rating:not(:checked) > label:hover,
+#rating:not(:checked) > label:hover ~ label {
+  color: #ffd700;
+}
+/* Hover vào các sao phía trước ngôi sao đã chọn*/
+#rating > input:checked + label:hover,
+#rating > input:checked ~ label:hover,
+#rating > label:hover ~ input:checked ~ label,
+#rating > input:checked ~ label:hover ~ label {
+  color: #ffed85;
+}

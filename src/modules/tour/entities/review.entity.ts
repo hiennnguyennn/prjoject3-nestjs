@@ -5,9 +5,12 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
   ManyToOne,
+  OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { Ticket } from './ticket.entity';
 
 @Entity()
 export class Review extends BaseEntity {
@@ -17,16 +20,12 @@ export class Review extends BaseEntity {
   @Column({ nullable: false, name: 'rate' })
   rate: number;
 
-  @Column({ nullable: true, name: 'messge', select: false })
+  @Column({ nullable: true, name: 'message', select: false })
   message: string;
 
-  @ManyToOne(() => User, (user) => user.tickets)
-  owner: User;
-
-  @ManyToOne(() => Departure, (departure) => departure.tickets, {
-    onDelete: 'CASCADE',
-  })
-  departure: Departure;
+  @OneToOne(() => Ticket, (ticket) => ticket.review)
+  @JoinColumn()
+  ticket: Ticket;
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;

@@ -3,6 +3,7 @@ import { CreateDateColumn } from 'typeorm';
 import { CategoryRepository } from '../admin-category/category.repository';
 import { DestinationRepository } from '../destination/destination.repository';
 import { PlanRepository } from '../tour/plan.repository';
+import { TicketRepository } from '../tour/ticket.repository';
 import { TourRepository } from '../tour/tour.repository';
 import { UserRepository } from '../user/user.repository';
 import { CreateTourDto } from './dto/create.dto';
@@ -17,6 +18,7 @@ export class AdminTourService {
     private readonly destinationRepository: DestinationRepository,
     private readonly categoryRepository: CategoryRepository,
     private readonly planRepository: PlanRepository,
+    private readonly ticketRepository: TicketRepository,
   ) {}
   private fs = require('fs');
   async getListDestination() {
@@ -112,7 +114,18 @@ export class AdminTourService {
     for (var i = 0; i < tours.notIncluded.length; i++) {
       tmp['notIncluded'] = tours.notIncluded.split(';');
     }
+    for (var i = 0; i < tours.departures.length; i++) {
+      console.log(1111111, tours.departures[i]);
+      tours.departures[i]['sold'] = Number(
+        (
+          await this.ticketRepository.countTicketDeparture(
+            tours.departures[i].id,
+          )
+        ).count,
+      );
+    }
     tmp = Object.assign(tours, tmp);
+    console.log(tmp);
     return tmp;
   }
   async getTour(id: number) {
@@ -214,6 +227,13 @@ export class AdminTourService {
     let t = await this.tourRepository.getTourById(id);
     if (t) {
       t.isHot = 1 - t.isHot;
+      return await t.save();
+    } else throw new BadRequestException('NOT FOUND');
+  }
+  async editStatus(id: number) {
+    let t = await this.tourRepository.getTourById(id);
+    if (t) {
+      t.status = 1 - t.status;
       return await t.save();
     } else throw new BadRequestException('NOT FOUND');
   }

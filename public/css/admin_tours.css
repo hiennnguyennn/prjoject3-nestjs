@@ -1,0 +1,121 @@
+.admin-list.blur {
+  -webkit-filter: blur(2px);
+  -moz-filter: blur(2px);
+  -o-filter: blur(2px);
+  -ms-filter: blur(2px);
+  filter: blur(2px);
+}
+.admin-list {
+  position: relative;
+  display: flex;
+}
+.admin-list .header-admin {
+  z-index: 10;
+}
+.admin-list .content {
+  z-index: 1;
+  width: 75%;
+  margin-left: 22%;
+  margin-top: 130px;
+  box-shadow: 0 3px 13px 0 rgba(0, 0, 0, 0.07);
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-bottom: 80px;
+  margin-bottom: 20px;
+  padding-top: 15px;
+  position: relative;
+}
+.admin-list .content h2 {
+  margin-bottom: 20px;
+  color: #ffed00;
+}
+.admin-list .content .limit {
+  position: absolute;
+  left: 20px;
+  bottom: 30px;
+  border: #3fd0d4 2px solid;
+  padding: 3px 5px;
+}
+.admin-list .create {
+  position: absolute;
+  right: 15px;
+  top: 15px;
+  border: 2px solid #3fd0d4;
+  padding: 3px 5px;
+}
+.admin-list .create a {
+  color: #3fd0d4;
+}
+.admin-list .create.hide {
+  display: none;
+}
+.admin-list .pagination .none {
+  display: none;
+}
+.admin-list .sort-icon {
+  width: 20px;
+  height: 20px;
+  background-color: white;
+}
+
+.admin-list .contentUser {
+  margin-top: 20px;
+}
+.admin-list button {
+  border: none;
+  background-color: white;
+  color: red;
+}
+
+.admin-list .usertable {
+  display: block;
+}
+.admin-list #userDetail {
+  display: block;
+  padding-left: 30px;
+}
+
+/* The popup form - hidden by default */
+.form-popup {
+  display: none;
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 15%;
+  border: 3px solid #f1f1f1;
+  z-index: 9;
+}
+
+/* Add styles to the form container */
+.form-container {
+  padding: 50px 100px;
+  background-color: white;
+}
+
+/* Set a style for the submit/login button */
+.form-container .btn {
+  background-color: #3fd0d4;
+  color: white;
+  padding: auto;
+  border: none;
+  cursor: pointer;
+
+  margin-bottom: 10px;
+  opacity: 0.8;
+}
+
+/* Add a red background color to the cancel button */
+.form-container .cancel {
+  background-color: red;
+}
+
+/* Add some hover effects to buttons */
+.form-container .btn:hover,
+.open-button:hover {
+  opacity: 1;
+}
+.button-group {
+  margin-top: 30px;
+  display: flex;
+  gap: 20px;
+}

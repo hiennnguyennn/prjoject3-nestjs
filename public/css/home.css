@@ -206,6 +206,10 @@
   width: 87%;
 
   margin: 60px auto 150px auto;
+
+  flex-wrap: wrap;
+  gap: 20px;
+  display: flex;
 }
 
 .home_content .text-in-img {
@@ -219,30 +223,32 @@
   transform: translate(-50%, -50%);
 }
 
-.home_content .tour-content .content .row .tour-info {
-  width: 100%;
+.home_content .tour-content .content .tour-info {
+  width: 23.5%;
+  height: 300px;
   box-sizing: border-box;
   overflow: hidden;
   position: relative;
 }
 
-.home_content .tour-content .content .row .tour-info img {
+.home_content .tour-content .content .tour-info img {
   width: 100%;
-  object-fit: contain;
+  height: 300px;
+  object-fit: fill;
   transition: transform 0.5s ease;
   transform-origin: 50% 50%;
 }
-.home_content .tour-content .content .row .tour-info img:hover {
+.home_content .tour-content .content .tour-info img:hover {
   width: 100%;
   transform: scale(1.1);
 }
-.home_content .tour-content .content .row .tour-info .hot_new {
+.home_content .tour-content .content .tour-info .hot_new {
   position: absolute;
   right: 20px;
   top: 7px;
   z-index: 1;
 }
-.home_content .tour-content .content .row .tour-info .detail {
+.home_content .tour-content .content .tour-info .detail {
   padding: inherit;
   position: absolute;
   left: 0;
@@ -251,34 +257,31 @@
   top: 80%;
   flex-shrink: 0;
 }
-.home_content .tour-content .content .row .tour-info .detail p {
+.home_content .tour-content .content .tour-info .detail p {
   font-weight: 600;
   text-align: left;
   margin: 0;
 }
-.home_content .tour-content .content .row .tour-info .detail h5 {
+.home_content .tour-content .content .tour-info .detail h5 {
   margin: 0;
   font-weight: 900;
   font-size: 18px;
   letter-spacing: -0.05em;
 }
-.home_content .tour-content .content .row .tour-info .detail > div {
+.home_content .tour-content .content .tour-info .detail > div {
   position: relative;
   float: left;
   margin-left: 20px;
 }
-.home_content .tour-content .content .row .tour-info .detail > h5 {
+.home_content .tour-content .content .tour-info .detail > h5 {
   float: right;
 
   margin-right: 10px;
   margin-top: 20px;
 }
-.home_content .tour-content .content .row {
-  margin-bottom: 30px;
-}
 
 .home_content .video .video-content {
-  background-image: url('https://setsail.qodeinteractive.com/wp-content/uploads/2018/09/h1-parallax-img-1.jpg');
+  background-image: url('/image/web/video.jpg');
 
   padding: 106px 250px 451px 250px;
   background-size: cover;
@@ -296,7 +299,7 @@
   width: 60vw;
   margin: 0 auto;
   position: absolute;
-  bottom: -100px;
+  top: 70%;
   left: 50%;
   transform: translateX(-50%);
 }
@@ -304,7 +307,7 @@
   width: 90vw;
   margin: 0 auto;
   text-align: center;
-  padding: 200px 0;
+  padding: 400px 0;
   padding-bottom: 150px;
 }
 .home_content .video .video-footer .item {
@@ -352,6 +355,7 @@
   border-radius: 10%;
   display: block;
   width: 100%;
+  height: 400px;
 }
 
 .home_content .plan-holiday {
@@ -409,4 +413,10 @@
 
 .home_content .plan-holiday .swiper-slide:nth-child(3n) {
   width: 20%;
+}
+.fa-star {
+  color: #c3c3c3;
+}
+.star-active {
+  color: #ffd700;
 }

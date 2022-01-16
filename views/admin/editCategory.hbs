@@ -1,0 +1,64 @@
+<div class="admin-list create">
+
+    {{>admin_header}}
+    {{>adminNavigation}}
+    <div class="content">
+        <h2>Create Category</h2>
+        <span class="create"><a href="/admin-category/categories">
+                < Back</a></span>
+        <form method="POST" action="/admin-category/categories/edit/{{c.id}}">
+            <div class="form-group">
+                <label for="name">Category</label>
+                <input type="text" class="form-control" name="name" value="{{c.name}}">
+                <div class="d-e">Error</div>
+                <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <button type="submit" class=" btn btn-primary">Submit</button>
+        </form>
+    </div>
+</div>
+
+<script>
+
+    const submit = document.querySelector('.btn');
+    const form = document.querySelector('form');
+
+    var e = document.querySelectorAll('.value');
+
+    var err = false;
+    function vali(element) {
+        if (element.value.length === 0) {
+
+            element.parentElement.classList.add('error');
+            var x = element.getAttribute("name");
+            x = x[0].toUpperCase() + x.slice(1) + " must not be null";
+            element.nextElementSibling.innerHTML = x;
+            err = true;
+        }
+        else err = false;
+    };
+    form.onsubmit = function (a) {
+        var sub = false;
+
+        e.forEach(function (value, index) {
+            vali(value);
+        });
+
+        if (err) a.preventDefault();
+
+    };
+    e.forEach(function (value, index) {
+        value.onfocus = function (e) {
+            e.target.parentElement.classList.remove('error');
+        }
+    });
+    e.forEach(function (value, index) {
+        value.onfocusout = function (e) {
+            vali(e.target);
+        }
+    });
+
+
+
+
+</script>

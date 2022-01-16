@@ -1,0 +1,271 @@
+{{>header}}
+<form class="tour-list">
+    <div class="slider">
+        <div class="slider-img"></div>
+        <h1>Tours Search Page</h1>
+    </div>
+    <div class="body-container">
+        <div class="body">
+            <ul class=" body-header row">
+
+                <li class="pricelth col h-active"><a
+                        href="/tours?search={{query.search}}&destination={{query.destination}}&month{{query.month}}&category={{query.category}}&sortField=price&sort=asc"><i
+                            class="fas fa-arrow-up"></i>PRICE LOW TO HIGH</a></li>
+                <li class=" pricehtl col"><a
+                        href="/tours?search={{query.search}}&destination={{query.destination}}&month{{query.month}}&category={{query.category}}&sortField=price&sort=desc"><i
+                            class="fas fa-arrow-down"></i>PRICE HIGH TO LOW</a></li>
+                <li class="name col"><a class="linkname"
+                        href="/tours?search={{query.search}}&destination={{query.destination}}&month{{query.month}}&category={{query.category}}&sortField=name&sort=asc"><i
+                            class="sort-name fas fa-sort-alpha-down"></i><i
+                            class="hide sort-name fas fa-sort-alpha-down-alt"></i>NAME</a></li>
+            </ul>
+            <div class="body-content">
+                <div class="tours">
+                    {{#each tours.items}}
+                    <div class="tour">
+                        <div>
+                            <a href="/tours/{{this.tour_id}}"><img src="/file/tours/{{this.tour_image.[0]}}"></a>
+                        </div>
+                        <div>
+                            <h4><a href="/tours/{{this.tour_id}}">{{this.tour_name}}</a></h4>
+                            <p class="des">{{this.tour_description}}</p>
+                            <p>${{this.tour_price}}</p>
+                            <div class="info-sold-age">
+                                <div><i class="fas fa-shopping-basket"></i>{{this.tickets}}</div>
+                                <div><i class="fas fa-user-check"></i>{{this.tour_minAge}}+</div>
+                                {{!-- {{#each this.category}}
+                                <div><i class="fas fa-map-marker-alt"></i>{{this}}</div>
+                                {{/each}} --}}
+                            </div>
+                        </div>
+                    </div>
+                    {{/each}}
+                    <nav aria-label="..." class="home-pagination">
+                        <ul class="pagination">
+                            <li class="page-item">
+                                <a class="page-link"
+                                    href="/tours?search={{query.search}}&destination={{query.destination}}&month{{query.month}}&category={{query.category}}&sortField={{query.sortField}}&sort={{query.sort}}&page={{sum tours.meta.currentPage -2}}">Previous</a>
+                            </li>
+                            <li class="page-item"><a class="page-link"
+                                    href="/tours?search={{query.search}}&destination={{query.destination}}&month{{query.month}}&category={{query.category}}&sortField={{query.sortField}}&sort={{query.sort}}&page={{sum tours.meta.currentPage -1}}"
+                                    name="page" value="{{sum tours.meta.currentPage -1}}">{{sum tours.meta.currentPage
+                                    -1}}</a></li>
+                            <li class="page-item active" aria-current="page">
+                                <span class="page-link">{{tours.meta.currentPage}}</span>
+                            </li>
+                            <li class="page-item"><a class="page-link"
+                                    href="/tours?search={{query.search}}&destination={{query.destination}}&month{{query.month}}&category={{query.category}}&sortField={{query.sortField}}&sort={{query.sort}}&page={{sum tours.meta.currentPage 1}}"
+                                    name="page" value="{{sum tours.meta.currentPage 1}}">{{sum tours.meta.currentPage
+                                    1}}</a></li>
+                            <li class="page-item">
+                                <a class="page-link"
+                                    href="/tours?search={{query.search}}&destination={{query.destination}}&month{{query.month}}&category={{query.category}}&sortField={{query.sortField}}&sort={{query.sort}}&page={{sum tours.meta.currentPage 2}}">Next</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="filter">
+                    <div class="filter-content">
+
+                        <form id="filter-tour" method="get" action="/tours">
+                            <div class="first">
+                                <h4>Plan Your Trip</h4>
+                                <p>It’s time to plan just the perfect vacation!</p>
+                                <input type="text" name="search" placeholder="Search Tour"
+                                    value="{{query.search}}"></input>
+                                {{!-- <input type="text" name="destination" placeholder="Where to?"
+                                    value="{{des}}"></input> --}}
+
+                                <div class="drop">
+                                    <span class="" type="button" id="dropdownMenuButton2" aria-expanded="false">
+                                        {{dropdown desFilter "destination"}}
+                                    </span>
+                                    <ul class="menu" aria-labelledby="dropdownMenuButton2">
+                                        <li>All</li>
+                                        {{#each des}}
+                                        <li data-id={{this.id}} class="lii">{{this.name}}</li>
+                                        {{/each}}
+                                    </ul>
+                                    <input type="number" class="dropValue" style="display: none;" name="destination">
+
+                                </div>
+                                <div class="drop">
+                                    <span class="" type="button" id="dropdownMenuButton1" aria-expanded="false">
+                                        {{dropdown query.month "month"}}
+                                    </span>
+                                    <ul class="menu month" aria-labelledby="dropdownMenuButton1">
+                                        <li>All</li>
+                                        <li class="lii">January</li>
+                                        <li class="lii">February</li>
+                                        <li class="lii">March</li>
+                                        <li class="lii">April</li>
+                                        <li class="lii">May</li>
+                                        <li class="lii">June</li>
+                                        <li class="lii">July</li>
+                                        <li class="lii">August</li>
+                                        <li class="lii">September</li>
+                                        <li class="lii">October</li>
+                                        <li class="lii">November</li>
+                                        <li class="lii">December</li>
+                                    </ul>
+                                    <input type="number" class="dropValue" style="display: none;" name="month">
+                                </div>
+                            </div>
+                            <div class="second">
+                                <h5>Filter by category</h5>
+                                {{#each c}}
+                                <div><input type="radio" name="category" value="{{this.id}}" {{{select ../query.category
+                                        this.id}}}>{{this.name}}</div>
+                                {{/each}}
+                            </div>
+                            <button>SEARCH</i></button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</form>
+{{>footer}}
+<script>
+    console.log("{{query.category}}")
+    let li = document.querySelectorAll('.filter .drop > ul > .lii')
+    var drop = document.querySelectorAll('.drop')
+    var dropshow = document.querySelectorAll('.drop span');
+    var menu = document.querySelectorAll('.drop .menu');
+    let inputValue = document.querySelectorAll('.dropValue');
+    function getNumericMonth(monthAbbr) {
+        return (String(['January',
+            'February',
+            'March',
+            'April',
+            'May',
+            'June',
+            'July',
+            'August',
+            'September',
+            'October',
+            'November',
+            'December'].indexOf(monthAbbr) + 1).padStart(2, '0')
+        );
+    }
+    for (var i = 0; i < li.length; i++) {
+
+        (function (index) {
+            console.log(i, li[i])
+            li[i].addEventListener('click', function (e) {
+                console.log(11111111111, index)
+                if (index > li.length - 13 && index < li.length) inputValue[1].value = getNumericMonth(e.target.innerText);
+                else inputValue[0].value = e.target.dataset.id;
+                console.log(inputValue[1].value, inputValue[0].value)
+            })
+        })(i);
+    }
+
+    document.onclick = function (e) {
+        for (var i = 0; i < menu.length; i++) {
+            if (e.target != menu[i] && e.target != dropshow[i])
+                menu[i].classList.remove('shows')
+        }
+    }
+    dropshow.forEach(function (t, i) {
+        t.addEventListener('click', function (e) {
+            active(e, i);
+        })
+    });
+    function active(e, i) {
+        menu[i].classList.toggle('shows')
+    };
+
+
+    var maxPage = Number("{{ tours.meta.totalPages }}")
+        ;
+    var sortField = "{{query.sortField}}";
+    var sort = "{{query.sort}}";
+    var list1 = drop[0].querySelectorAll('li');
+    var list2 = drop[1].querySelectorAll('li');
+    list1.forEach(function (l, i) {
+        var t = 0;
+        var x = list1[i].innerText;
+        l.onclick = function (e) {
+            displayList(e, x, t);
+        }
+    });
+    list2.forEach(function (l, i) {
+        var t = 1;
+        var x = list2[i].innerText;
+        l.onclick = function (e) {
+            displayList(e, x, t);
+        }
+    });
+    function displayList(e, x, t) {
+        dropshow[t].innerText = x;
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        var name = [];
+        name[0] = document.querySelector('.fa-sort-alpha-down');
+        name[1] = document.querySelector('.fa-sort-alpha-down-alt');
+        let icon = document.querySelectorAll('.sort-name')
+
+        /*  var des = document.querySelectorAll('.des');
+          for (var i = 0; i < des.length; i++) {
+              if (des[i].innerText.length > 80) {
+                  des[i].innerText = des[i].innerText.slice(0, 80) + '...';
+              }
+          } */
+        var form = document.querySelector('.tour-list')
+        var pageLoad = document.getElementsByClassName('page-item');
+        if (pageLoad[1].innerText == 0 || pageLoad[1].innerText < 0) {
+            pageLoad[0].classList.add('none');
+            pageLoad[1].classList.add('none');
+        };
+        if (pageLoad[1].innerText == 1) {
+            pageLoad[0].classList.add('none')
+        };
+        if (pageLoad[2].innerText == maxPage | pageLoad[2].innerText > maxPage) {
+            pageLoad[3].classList.add('none');
+            pageLoad[4].classList.add('none');
+        };
+        if (pageLoad[3].innerText == maxPage) {
+            pageLoad[4].classList.add('none');
+        };
+        pageLoad[1].onclick = function (e) {
+            form.submit();
+        }
+        pageLoad[3].onclick = function (e) {
+            form.submit();
+        };
+        var menu = document.querySelectorAll('.body-header .col');
+        for (var i = 0; i < menu.length; i++) {
+            menu[i].classList.remove('h-active')
+        };
+        let select = document.querySelectorAll('.body > ul > li');
+        console.log(sort, sortField)
+        if (sortField === 'price') {
+            if (sort == 'asc') select[0].classList.add('h-active');
+            else select[1].classList.add('h-active')
+        }
+        else { select[2].classList.add('h-active'); }
+        let link = document.querySelector('.linkname');
+
+        if (sortField == 'name') {
+
+            if (sort == 'asc') {
+                link.href = `/tours?sortField=name&sort=desc&search={{query.search}}&destination={{query.destination}}&month={{query.month}}&category={{query.category}}`;
+                icon[1].classList.add('hide');
+                icon[0].classList.remove('hide')
+            }
+
+            else {
+                link.href = `/tours?sortField=name&sort=asc&search={{query.search}}&destination={{query.destination}}&month={{query.month}}&category={{query.category}}`
+                icon[0].classList.add('hide');
+                icon[1].classList.remove('hide')
+            }
+        }
+
+
+    });
+</script>

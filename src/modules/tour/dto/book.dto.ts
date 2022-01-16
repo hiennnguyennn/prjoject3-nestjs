@@ -5,6 +5,7 @@ import { IsNumber, isNumber, IsOptional } from 'class-validator';
 
 export class BookTourDto {
   @ApiProperty({ type: Number, required: true })
+  @Type(() => Number)
   readonly departureId: number;
 
   @ApiProperty({ type: Number, required: true })

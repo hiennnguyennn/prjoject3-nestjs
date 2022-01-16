@@ -27,12 +27,14 @@ export class AppController {
   // @Render('user/home')
   async showHomePage(@Res() Res, @Req() req) {
     const hotTours = await this.tourRepository.get5HotTours();
+
     const newTours = await this.tourRepository.get5NewTours();
+
     const category = await this.categoryRepository.getAll();
     let hotNewTours = hotTours.concat(newTours);
 
     this.shuffle(hotNewTours);
-
+    console.log(111, hotNewTours);
     const des = await this.destinationReository.getList();
 
     const tours = await this.tourRepository.getList();

@@ -1,0 +1,79 @@
+.admin-list.detail .detail1 {
+  display: flex;
+  gap: 50px;
+  margin-top: 20px;
+  position: relative;
+}
+.admin-list.detail .detail1 .left,
+.admin-list.detail.detail1 .right {
+  width: 40%;
+  align-items: center;
+  text-align: center;
+}
+.admin-list.detail .detail1 .right {
+  width: 60%;
+  padding: 0 30px;
+}
+.admin-list.detail .detail1 .right .table {
+  border-collapse: collapse;
+}
+
+.admin-list.detail .table td,
+.admin-list.detail .detail1 .table th {
+  border: none;
+  text-align: left;
+}
+.admin-list.detail .detail1 .table th {
+  width: 30%;
+}
+
+.admin-list.detail .detail1 h4 {
+  text-align: left;
+}
+.admin-list.detail .detail1 .display {
+  width: 150px;
+  margin-top: 50px;
+  text-align: center;
+  margin-left: 85px;
+  font-size: 20px;
+}
+.admin-list.detail .detail1 .display,
+.admin-list.detail .but {
+  background-color: #3fd0d4;
+  color: white;
+  padding: 5px 7px;
+  border: none;
+}
+.admin-list.detail .detail1 .button {
+  position: absolute;
+  left: 60%;
+  top: -10px;
+  display: flex;
+  gap: 20px;
+}
+.admin-list.detail .but {
+  color: white;
+}
+.admin-list.detail .del {
+  background-color: tomato;
+  padding: 5px 7px;
+}
+.admin-list.detail .tours {
+  margin: 30px;
+  margin-top: 50px;
+}
+.admin-list.detail .tours .table {
+  width: 70%;
+  margin: 20px 30px;
+
+  width: 90%;
+  /* padding-right: 30px; */
+}
+.admin-list.detail .tours .table .de-button {
+  border: none;
+  background-color: white;
+  text-align: left;
+}
+.admin-list.detail .tours .table thead {
+  background-color: #c3c3c3;
+}

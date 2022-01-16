@@ -14,6 +14,7 @@ import { Auth } from 'src/common/decorator/auth.decorator';
 import { BookTourDto } from './dto/book.dto';
 
 import { ListTourInUserDto } from './dto/list.dto';
+import { ReviewDto } from './dto/review.dto';
 import { TourService } from './tour.service';
 @ApiTags('tours')
 @Controller('tours')
@@ -45,21 +46,31 @@ export class TourController {
   })
   async tourDetail(@Param('id', ParseIntPipe) id, @Res() res) {
     const tour = await this.tourService.getOne(id);
-    tour['include'] = tour.included.split(';');
-    tour['notInclude'] = tour.notIncluded.split(';');
-    for (var i = 0; i < tour.plans.length; i++) {
-      tour.plans[i]['include'] = tour.plans[i].included.split(';');
-      tour.plans[i]['notInclude'] = tour.plans[i].notIncluded.split(';');
-    }
-    tour['showImage'] = tour.image.slice(0, 5);
+    console.log(tour);
     res.render('user/tour/showTour', { t: tour });
   }
   @Auth('user')
   @Post('/book')
-  async bookTour(@Body() data: BookTourDto, @Req() req) {}
+  async bookTour(@Body() data: BookTourDto, @Req() req) {
+    console.log(data);
+    let u = req.user;
+
+    return this.tourService.bookTour(data, u);
+  }
+
   @Auth('user')
   @Post('/review')
-  async reviewTour(@Body() data, @Req() req) {
-    return this.tourService.saveReview(data);
+  async reviewTour(@Body() data: ReviewDto, @Req() req, @Res() res) {
+    console.log(data);
+    let r = await this.tourService.saveReview(data);
+    res.redirect('back');
+  }
+  @Auth('user')
+  @Post('/cancel')
+  async cancelTour(@Body() data, @Res() res) {
+    console.log(1111111, data);
+    let id = Number(data.ticketId);
+    await this.tourService.cancel(id);
+    res.redirect('back');
   }
 }

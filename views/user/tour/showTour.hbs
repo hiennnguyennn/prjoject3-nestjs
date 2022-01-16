@@ -1,0 +1,267 @@
+{{>header}}
+<div class="showTour">
+    <div class="slide-container">
+        <div class="slider" style="background-image: url('/file/tours/{{t.image.[0]}}');"></div>
+        <div>
+            <h3>Amazing Tour</h3>
+            <h1>{{t.name}}</h1>
+        </div>
+    </div>
+    <div class="body">
+        <div class="body-container">
+            <ul class=" body-header row">
+                <li class="h-info col h-active"><a><i class="far fa-list-alt"></i>INFORMATION</a></li>
+                <li class="h-plan col"><a><i class="far fa-calendar"></i>TOUR PLAN</a></li>
+
+                <li class="h-image col"><a><i class="fas fa-camera"></i>GALLERY</a></li>
+                <li class="h-review col"><a><i class="far fa-comments"></i>REVIEWS</a></li>
+            </ul>
+            <div class="content">
+                <div class="info">
+                    <div class="content-info active">
+
+                        <div class="info-item info-header">
+                            <h3>{{t.name}}</h3>
+                            <div>
+                                <h5>${{t.price}}</h5>
+                                <p>/ per person</p>
+                            </div>
+                        </div>
+                        <p class="info-item">{{t.description}}
+                        </p>
+                        <div class="info-item info-sold-age">
+                            <span><i class="fas fa-shopping-basket"></i>{{t.tickets}}</span>
+                            <span><i class="fas fa-user-check"></i>{{t.minAge}}+ age</span>
+                        </div>
+                        <div class="info-item info-body">
+                            <div class="row">
+                                <div class="col-3">From</div>
+                                <div class="col"><a
+                                        href="/destinations/{{t.fromDestintion.id}}">{{t.fromDestintion.name}}</a></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3">Destination</div>
+                                <div class="col">
+                                    {{#each t.destinations}}
+                                    <a href="/destinations/{{this.id}}">{{this.name}} </a>
+
+                                    {{/each}}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3">Departure</div>
+                                <div class="col">
+                                    <ul>
+                                        {{#each t.departures}}
+                                        <li><i class="far fa-check-circle"></i>Start: {{date this.start}} &emsp; Return:
+                                            {{date
+                                            this.end}}<br>
+                                            <p style="margin-left: 25px;"> Sold/Max: {{soldMax this.sold this.max}}</p>
+                                        </li>
+                                        {{/each}}
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3">Departure Time</div>
+                                <div class="col">{{t.timeStart}}</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3">Return Time</div>
+                                <div class="col">{{t.timeReturn}}</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3">Dress Code</div>
+                                <div class="col">{{t.dresscode}}</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3">Included</div>
+                                <div class="col">
+                                    <ul>
+                                        {{#each t.include}}
+                                        <li><i class="far fa-check-circle"></i>{{this}}</li>
+                                        {{/each}}
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3">Not Included</div>
+                                <div class="col">
+                                    <ul>
+                                        {{#each t.notInclude}}
+                                        <li><i class="far fa-times-circle"></i> {{this}}</li>
+                                        {{/each}}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="info-item info-img">
+                            <h3>From our gallery</h3>
+                            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget
+                                dolor. Aenean massa. Cum sociis Theme natoque penatibus et magnis dis parturient montes,
+                                nascetur ridiculus mus.
+                            </p>
+                            <div class="form-group images">
+
+                                <ul>
+
+                                    {{#each t.showImage}}
+
+                                    <li>
+                                        <img class="d-block w-100" src="/file/tours/{{this}}" alt="Second slide">
+
+                                    </li>
+
+                                    {{/each}}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="plan-info">
+                        <h3>Tour Plan</h3>
+                        {{#each t.plans}}
+                        <div class="plan">
+
+                            <div class="plan-header">
+                                <span>{{sum @index 1}}</span>
+                                <h4>Day {{sum @index 1}}: {{this.title}}</h4>
+                            </div>
+                            <div class="plan-body">
+                                <p>{{this.description}}</p>
+                                <div>
+                                    <h5>Included</h5>
+                                    <ul>
+                                        {{#each this.include}}
+                                        <li><i class="far fa-check-circle"></i>{{this}}</li>
+                                        {{/each}}
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h5>Not Included</h5>
+                                    <ul>
+                                        {{#each this.notInclude}}
+                                        <li><i class="far fa-times-circle"></i>{{this}}</li>
+                                        {{/each}}
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="line"></div>
+
+                        </div>
+                        {{/each}}
+                    </div>
+                    <div class="image-info images">
+                        <ul>
+
+                            {{#each t.image}}
+
+                            <li>
+                                <img class="d-block w-100" src="/file/tours/{{this}}" alt="Second slide">
+
+                            </li>
+
+                            {{/each}}
+                        </ul>
+                    </div>
+                    <div class="review-info">
+                        <h3>List review</h3>
+                        {{#each t.review}}
+                        <article class="leaderboard__profile tourDetail" data-star={{this.rate}}>
+
+                            <span class="leaderboard__name">{{this.ticket.owner.name}} <p>(in tour start {{date
+                                    this.ticket.departure.start}})</p></span>
+                            <span class="leaderboard__value">
+                                <div class="rating1">
+
+                                    <i class="far fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </div>
+                            </span>
+                            {{!-- <p>departure {{timeStartToEnd this.ticket.departure.start this.ticket.departure.end }}
+                            </p> --}}
+
+                            <p class="message">{{message this.message}} {{this.message}}</p>
+                        </article>
+
+                        {{/each}}
+                    </div>
+                    <div class="book">
+                        <div class="book-main">
+                            <h4>Book This Tour</h4>
+                            <p>Arrange your trip in advance - book this tour now!</p>
+                            <form id="book-tour" method="POST" action="/tours/book">
+                                <input id="numberTickets" type="number" name="number"
+                                    placeholder="Number of tickets *"></input>
+                                <input type="text" name="message" placeholder="Message *"></input>
+                                {{!-- <input type="text" style="display: none;" name="tour_id" value="{{t._id}}"> --}}
+                                <select class="form-control value" name="departureId" id="departure">
+                                    {{#each t.departures}}
+                                    <option value={{this.id}}>{{date this.start}}</option>
+                                    {{/each}}
+                                </select>
+                                <button>BOOK NOW<i class="fas fa-exclamation-triangle"></i></button>
+                                <p class="err">You not login yet</p>
+                                <p>If you not login yet, please <a href="/auth/login">Login</a> or create account with
+                                    <a href="/auth/register">Register</a>
+                                </p>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+{{>footer}}
+<script>
+    let tours = document.querySelectorAll('.tourDetail'); let star = document.querySelectorAll('.rating1 .fa-star');
+    for (var i = 0; i < tours.length; i++) {
+        let rate = Number(tours[i].dataset.star);
+        console.log(11111, rate)
+        for (var j = 5 * i; j < 5 * i + rate; j++) {
+            star[j].classList.add('star-active')
+        }
+    }
+    const h = [];
+    const c = [];
+    h[0] = document.querySelector('.h-info');
+    h[1] = document.querySelector('.h-plan');
+    h[2] = document.querySelector('.h-image')
+    h[3] = document.querySelector('.h-review')
+    c[0] = document.querySelector('.content-info');
+    c[1] = document.querySelector('.plan-info');
+    c[2] = document.querySelector('.image-info');
+    c[3] = document.querySelector('.review-info')
+    h.forEach(function (value, index) {
+        value.onclick = function (e) {
+            handleClick(e, index);
+        }
+    });
+
+    function handleClick(e, index) {
+
+        for (var i = 0; i < h.length; i++) {
+
+            h[i].classList.remove('h-active');
+            c[i].classList.remove('active')
+        }
+        h[index].classList.add('h-active');
+        c[index].classList.add('active');
+    }
+    var numerOfTicket = document.querySelector('#numberTickets');
+    let form = document.querySelector('form')
+    form.onsubmit = function (e) {
+        let number = Number(numerOfTicket.value);
+        if (!number || number <= 0) {
+            e.preventDefault();
+            window.alert('Number of ticket must >0');
+        }
+
+    }
+</script>

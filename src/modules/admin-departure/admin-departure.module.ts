@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from 'src/auth/auth.module';
 import { DestinationRepository } from '../destination/destination.repository';
+import { TicketRepository } from '../tour/ticket.repository';
 import { TourRepository } from '../tour/tour.repository';
 import { UserRepository } from '../user/user.repository';
 import { AdminDepartureController } from './admin-departure.controller';
@@ -16,6 +17,7 @@ import { Departure } from './entities/departure.entity';
       TourRepository,
       DepartureRepository,
       DestinationRepository,
+      TicketRepository,
     ]),
     AuthModule,
   ],

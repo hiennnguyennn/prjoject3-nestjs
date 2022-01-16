@@ -1,0 +1,148 @@
+<div class="admin-list detail">
+
+    {{>admin_header}}
+    {{>adminNavigation}}
+    <div class="content">
+        <h2>User Detail</h2>
+        <span class="create"><a href="/admin-user/users">
+                < Back</a></span>
+
+        <div class="detail" id="userDetail">
+
+
+            <h4 class="contentUser">{{u.name}}</h4>
+            <div class="button">
+                <div>
+                    {{!-- <form action="/admin-user/users/edit/{{u.id}}" method="get"> --}}
+                        <button class="but" onclick="openForm1()">EDIT TYPE</button>
+                        {{!--
+                    </form> --}}
+                </div>
+                <div>
+                    {{!-- <form action="/admin-user/users/remove/{{u.id}}" method="post"> --}}
+                        <button class="but disable" style="background-color: #555;" onclick="openForm()">{{changeStatus
+                            1 u.status }}</button>
+                        {{!--
+                    </form> --}}
+                </div>
+            </div>
+
+            <table class="table usertable">
+                <tbody>
+                    <tr>
+                        <th scope="row">Username</th>
+                        <td>{{u.name}}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Gender</th>
+                        <td>{{u.gender}}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Email</th>
+                        <td>{{u.mail}}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Phone number</th>
+                        <td>{{u.phone}}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Date of Birth</th>
+                        <td>{{u.dob}}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">ID Card</th>
+                        <td>{{u.id_card}}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Gender</th>
+                        <td>{{u.gender}}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Address</th>
+                        <td>{{u.address}}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Status</th>
+                        <td>{{status u.status}}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">User type</th>
+                        <td>{{role u.role}}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">EmployeeId</th>
+                        <td>{{u.employeeId}}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+
+
+    </div>
+</div>
+<div class="form-popup" id="myForm">
+    <form action="/admin-user/users/editUserStatus/{{u.id}}" method="post" class="form-container">
+        <h5>Disable User</h5>
+
+        <p>Do you want to {{changeStatus
+            1 u.status }} {{u.name}}</p>
+        <div class="button-group">
+            <button type="submit" class="btn">{{changeStatus
+                1 u.status }}</button>
+            <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+        </div>
+
+    </form>
+</div>
+
+<div class="form-popup" id="myForm1">
+    <form action="/admin-user/users/editUserType/{{u.id}}" method="post" class="form-container">
+        <h5>Edit User Type</h5>
+
+        <p>{{u.name}} current type is {{role u.role}}</p>
+        <div class="button-group">
+            <label for="role">Select new role:</label>
+            <select name="role" id="cars">
+                <option class="select" value="0">Normal</option>
+                <option class="select" value="1">Employee</option>
+                <option class="select" value="2">Manager</option>
+
+            </select>
+        </div>
+        <div class="button-group">
+            <button type="submit" class="btn">CHANGE</button>
+            <button type="button" class="btn cancel" onclick="closeForm1()">Close</button>
+        </div>
+    </form>
+</div>
+<script>
+
+    function openForm() {
+        document.querySelector('.admin-list').classList.add('blur')
+        document.getElementById("myForm").style.display = "block";
+        document.getElementById("myForm").style.filter = "blur(0px)"
+
+
+    }
+    let s = document.querySelectorAll('.select');
+    let current = "{{u.role}}";
+    s[Number(current)].selected = true
+    function closeForm() {
+        document.querySelector('.admin-list').classList.remove('blur')
+        document.getElementById("myForm").style.display = "none";
+    }
+
+    function openForm1() {
+        document.querySelector('.admin-list').classList.add('blur')
+        document.getElementById("myForm1").style.display = "block";
+        document.getElementById("myForm1").style.filter = "blur(0px)"
+
+
+    }
+
+    function closeForm1() {
+        document.querySelector('.admin-list').classList.remove('blur')
+        document.getElementById("myForm1").style.display = "none";
+    }
+</script>

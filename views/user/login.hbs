@@ -1,0 +1,88 @@
+{{>header}}
+<div class="login">
+    <div class="container">
+        <div class="left">
+            <div class="title">Login</div>
+            <div class="eula">By logging in you agree to the ridiculously long terms that you didn't bother to
+                read.<br>If you not have account, please <a href="/auth/register">Register</a> first
+            </div>
+        </div>
+        <div class="right">
+
+            <form class="form" method="POST" action="/auth/login">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" class="form-control in" name="mail" value="{{p.mail}}">
+                    <div class="line"></div>
+                    <div class="d-e">{{errs}}</div>
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control in" name="password" value="{{p.password}}">
+                    <div class="line"></div>
+                    <div class="d-e">{{err}}</div>
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+                <button class="submit" disabled>SUBMIT</button>
+
+            </form>
+        </div>
+    </div>
+</div>
+{{>footer}}
+<script>
+    const submit = document.querySelector('button');
+    const form = document.querySelector('form');
+
+    var e = document.querySelectorAll('.in');
+    /* e[0] = document.querySelector('input[name="email"]');
+     e[1] = document.querySelector('input[name="pass"]');*/
+    /*if (e[0].value != "") {
+        e[0].parentElement.classList.add('error');
+    };
+    if (e[1].value != "") {
+        e[1].parentElement.classList.add('error');
+    }*/
+    var error = document.querySelectorAll('.d-e');
+    function vali(element, index) {
+
+        if (element.value.length === 0) {
+            element.parentElement.classList.add('error');
+            var x = element.getAttribute("name");
+            x = x[0].toUpperCase() + x.slice(1) + " must not be null";
+            error[index].innerHTML = x;
+            // element.nextElementSibling.innerHTML = x;
+            err = true;
+        }
+
+        else {
+            err = false;
+
+            submit.disabled = false;
+            submit.classList.add('active')
+
+        }
+    };
+    form.onsubmit = function (a) {
+        var sub = false;
+        e.forEach(function (value, index) {
+            vali(value, index);
+        });
+
+        if (err) a.preventDefault();
+
+    };
+    e.forEach(function (value, index) {
+        value.onfocus = function (e) {
+            e.target.parentElement.classList.remove('error');
+        }
+    });
+    e.forEach(function (value, index) {
+        value.onfocusout = function (e) {
+            vali(e.target, index);
+        }
+    });
+
+
+</script>

@@ -61,9 +61,11 @@ export class TourRepository extends Repository<Tour> {
   }
   getTourById(id: number) {
     return this.createQueryBuilder('tour')
-      .where('tour.id= :id', { id: id })
       .select('tour')
+      .where('tour.id= :id', { id: id })
+
       .addSelect('tour.image')
+      .addSelect('tour.status')
       .addSelect('tour.dresscode')
       .addSelect('tour.included')
       .addSelect('tour.notIncluded')
@@ -91,27 +93,60 @@ export class TourRepository extends Repository<Tour> {
       .addSelect('tour.name')
       .getMany();
   }
-  get5NewTours() {
-    return this.createQueryBuilder('tour')
+  async get5NewTours() {
+    let tours = await this.createQueryBuilder('tour')
       .select('tour')
       .addSelect('tour.image')
       .addSelect('tour.isHot')
       .where('tour.status=1')
       .andWhere('tour.isHot=0')
+
+      .leftJoin('tour.departures', 'departures')
+      .addSelect('departures.id')
+      .leftJoin('departures.tickets', 'tickets')
+      .addSelect('tickets.id')
+      .leftJoin('tickets.review', 'review')
+      .addSelect('avg(review.rate) as totalRate')
       .orderBy('tour.createdAt', 'DESC')
       .limit(5)
-      .getMany();
+      .getRawMany();
+    if (tours.length > 0) {
+      for (var i = 0; i < tours.length; i++) {
+        tours[i]['image'] = tours[i]['image'].split(',');
+      }
+      return tours;
+    } else return [];
   }
-  get5HotTours() {
-    return this.createQueryBuilder('tour')
+
+  async get5HotTours() {
+    let tours = await this.createQueryBuilder('tour')
       .select('tour')
       .addSelect('tour.isHot')
       .addSelect('tour.image')
       .where('tour.status=1')
       .andWhere('tour.isHot=1')
+      .leftJoin('tour.departures', 'departures')
+      .addSelect('departures.id')
+      .leftJoin('departures.tickets', 'tickets')
+      .addSelect('tickets.id')
+      .leftJoin('tickets.review', 'review')
+      .addSelect('avg(review.rate) as totalRate')
       .orderBy('tour.createdAt', 'DESC')
       .limit(5)
-      .getMany();
+      .getRawMany();
+    // for(var i=0;i<tours.length;i++){
+    //   let rate=5;
+    //   for(var j=0;j<tours[i].departures.length;j++){
+
+    //   }
+    // }
+    console.log(tours);
+    if (tours.length > 0 && !!tours[0].id) {
+      for (var i = 0; i < tours.length; i++) {
+        tours[i]['image'] = tours[i]['image'].split(',');
+      }
+      return tours;
+    } else return [];
   }
   async getList() {
     return this.createQueryBuilder('tour')
@@ -145,6 +180,8 @@ export class TourRepository extends Repository<Tour> {
       .addSelect('tour.minAge')
       .leftJoinAndSelect('tour.departures', 'departures')
       .leftJoinAndSelect('tour.destinations', 'destinations')
+      .leftJoin('departures.tickets', 'tickets')
+      .addSelect('count(tickets.id)', 'tickets')
       .groupBy('tour.id');
     if (data.search)
       t.andWhere('tour.name like :search', { search: `%${data.search}%` });

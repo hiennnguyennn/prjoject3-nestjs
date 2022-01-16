@@ -1,7 +1,0 @@
-
-            Fonts used: CallunaSans-Italic,Quicksand-Bold 
-
-            Colors used: F2EEE4,5065A8  
-
-            Icon url: https://thenounproject.com/term/travel/49736  
-        

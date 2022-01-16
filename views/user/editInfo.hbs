@@ -1,0 +1,247 @@
+{{>header}}
+<div class="editUser">
+    <ul class="body-header row" style="padding: 0;">
+        <li class="h-info col h-active">MY PROFILE</li>
+        <li class="h-plan col">MY TOURS</li>
+
+    </ul>
+    <div class="form-create">
+        <div class="col-sm-3 bg-c-lite-green user-profile"
+            style="margin-top: 0px; background-color: #3fd0d4;height:100vh">
+            <div class="card-block text-center text-white">
+                <div class="m-b-25"> <img src="https://img.icons8.com/bubbles/100/000000/user.png" class="img-radius"
+                        alt="User-Profile-Image" style="margin-top:150px;"> </div>
+                <h6 class="f-w-600">{{u.name}}</h6>
+                <p>{{u.mail}}</p> <i class=" mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16"></i>
+            </div>
+        </div>
+        <div class="userInfo info">
+            <form method="POST" action="/users/edit">
+                <h1>My profile</h1>
+                <div class="col" style="padding-left: 0;">
+                    <label for="name">Username</label>
+                    <input name="name" id="name" type="text" class="form-control" value="{{u.name}}">
+
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <label for="phone">Phone number</label>
+                        <input name="phone" id="phone" type="text" class="form-control" value="{{u.phone}}">
+
+                    </div>
+                    <div class="col">
+                        <label for="mail">Email</label>
+                        <input name="mail" type="text" class="form-control" value="{{u.mail}}" disabled>
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <p>Gender</p>
+                        <input type="radio" id="female" name="gender" value="0" style="margin-left: 15px;" {{select
+                            u.gender 0}}>
+                        <label for="female" style="margin-right: 10px;">Female</label>
+                        <input type="radio" id="male" name="gender" value="1" {{select u.gender 1}}>
+                        <label for="male" style="margin-right: 10px;">Male</label>
+                        <input type="radio" id="other" name="gender" value="2" {{select u.gender 2}}>
+                        <label for="other" style="margin-right: 10px;">Other</label>
+
+                    </div>
+                    <div class="col">
+                        <label for="dob">Date of birth</label>
+                        <input name="dob" type="date" class="form-control" value="{{u.dob}}">
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <label for="dob">ID Card</label>
+                        <input name="id_card" type="text" class="form-control" value="{{u.id_card}}">
+
+                    </div>
+                    <div class="col">
+                        <label for="address">Address</label>
+                        <input name="address" type="text" class="form-control" placeholder="Enter your address"
+                            value="{{u.address}}">
+
+                    </div>
+                </div>
+                <button type="submit" class=" btn btn-primary" style="height: 100px;">Submit</button>
+            </form>
+        </div>
+        <div class="tourInfo info hide" style="padding-right: 0; width: 75%;">
+            <h1>My tours</h1>
+            <ul>
+                {{#each t}}
+                <li class="tours" data-id={{this.id}} data-name={{name this.departure.tour.name}}
+                    data-status={{this.status}} data-star={{star this.review.rate}} data-message={{star
+                    this.review.message}}>
+                    {{this.departure.tour.name}}
+                    <p class="time">{{timeStartToEnd this.departure.start this.departure.end}}</p>
+                    <p class="statusAndMoney">Status: {{statusTicket this.status}}, Total: {{money
+                        this.departure.tour.price this.number}}</p>
+                    {{!-- <button class="review">Review</button> --}}
+                </li>
+
+                {{/each}}
+
+
+
+            </ul>
+        </div>
+
+    </div>
+</div>
+{{>footer}}
+<script>
+    let header = document.querySelectorAll('.editUser .body-header .col');
+    let info = document.querySelectorAll('.editUser .info');
+    for (var i = 0; i < header.length; i++) {
+        (function (index) {
+            header[i].onclick = function () {
+                console.log(index)
+                for (var j = 0; j < header.length; j++) { info[j].classList.add('hide'); header[j].classList.remove('h-active') }
+                info[index].classList.remove('hide');
+                header[index].classList.add('h-active')
+            }
+        })(i)
+    }
+    let tours = document.querySelectorAll('.editUser .tours');
+    for (var i = 0; i < tours.length; i++) {
+        let name = tours[i].dataset.name.split("-").join(" ");
+        let id = tours[i].dataset.id;
+        tours[i].dataset.status = Number(tours[i].dataset.status);
+        console.log(111111111111111111, tours[i].dataset.status)
+        if (tours[i].dataset.status == 0 || tours[i].dataset.status == 1) {
+            console.log(10)
+            tours[i].innerHTML = tours[i].innerHTML + `<form action="#"><button onclick="openForm1()" class="review">Cancel</button></form>`;
+            if (tours[i].dataset.status == 0) {
+                document.querySelector('.editUser .tours').outerHTML = document.querySelector('.editUser .tours').outerHTML + `<div class="form-popup" id="myForm1">
+    <form action="/tours/cancel" method="post" class="form-container">
+        <h5>Cancel tour ticket</h5>
+
+        <p>Do you want cancel this tour ${name} ticket ?</p>
+        <input type="number" name="ticketId" value=${id} style="display:none">
+       
+        <div class="button-group">
+            <button type="submit" class="btn">Cancel</button>
+            <button type="button" class="btn cancel" onclick="closeForm1()">Close</button>
+        </div>
+    </form>
+</div>`
+            }
+            else if (tours[i].dataset.status == 1) {
+                document.querySelector('.editUser .tours').outerHTML = document.querySelector('.editUser .tours').outerHTML + `<div class="form-popup" id="myForm1">
+    <form action="/tours/cancel" method="post" class="form-container">
+        <h5>Cancel tour ticket</h5>
+
+        <p>If cancel, you will lost 25% price of all tickets. Do you want cancel this ${name} tour ticket?</p>
+        <input type="number" name="ticketId" value=${id}  style="display:none">
+       
+        <div class="button-group">
+            <button type="submit" class="btn">Cancel</button>
+            <button type="button" class="btn cancel" onclick="closeForm1()">Close</button>
+        </div>
+    </form>
+</div>`
+            }
+
+        }
+        else if (tours[i].dataset.status == 2 || tours[i].dataset.status == 3) {
+            console.log(23)
+            tours[i].innerHTML = tours[i].innerHTML + `<form action="#"><button  onclick="openForm1()"  class="review">Review</button></form>`;
+
+            document.querySelector('.editUser .tours').outerHTML = document.querySelector('.editUser .tours').outerHTML + `<div class="form-popup" id="myForm1">
+    <form action="/tours/review" method="post" class="form-container">
+        <h5>Review tour ${name}</h5>
+
+       
+        <input type="number" name="ticketId" value=${id} style="display:none">
+      <div class="rating-css">
+    <div>Rate</div>
+    <div id="rating">
+    <input type="radio" id="star5" name="rate" value="5" />
+    <label class = "full" for="star5" title="Awesome - 5 stars"></label>
+ 
+    <input type="radio" id="star4" name="rate" value="4" />
+    <label class = "full" for="star4" title="Pretty good - 4 stars"></label>
+ 
+    <input type="radio" id="star3" name="rate" value="3" />
+    <label class = "full" for="star3" title="Meh - 3 stars"></label>
+ 
+    <input type="radio" id="star2" name="rate" value="2" >
+    <label class = "full" for="star2" title="Kinda bad - 2 stars"></label>
+ 
+    <input type="radio" id="star1" name="rate" value="1" />
+    <label class = "full" for="star1" title="Sucks big time - 1 star"></label>
+</div>
+  </div>
+       <div>Message</div>
+            <textarea name="message" placeholder="Review about tour" style="height:100px" class="form-control"></textarea>
+        <div class="button-group">
+            <button type="submit" class="btn">Submit</button>
+            <button type="button" class="btn cancel" onclick="closeForm1()">Close</button>
+        </div>
+    </form>
+</div>`
+
+
+        }
+        else if (tours[i].dataset.status == 4) {
+            console.log(4)
+            tours[i].innerHTML = tours[i].innerHTML + `<form action="#"><button class="review" onclick="openForm1()">My review</button></form>`;
+            document.querySelector('.editUser .tours').outerHTML = document.querySelector('.editUser .tours').outerHTML + `<div class="form-popup" id="myForm1">
+    <form action="#" method="post" class="form-container">
+        <h5>My review tour ${name}</h5>
+      <div class="rating-css">
+    <div>Rate</div>
+    <div id="rating">
+    <input type="radio" id="star5" name="rate" value="5" disabled/>
+    <label class = "full" for="star5" title="Awesome - 5 stars"></label>
+ 
+    <input type="radio" id="star4" name="rate" value="4" disabled/>
+    <label class = "full" for="star4" title="Pretty good - 4 stars"></label>
+ 
+    <input type="radio" id="star3" name="rate" value="3" disabled/>
+    <label class = "full" for="star3" title="Meh - 3 stars"></label>
+ 
+    <input type="radio" id="star2" name="rate" value="2" disabled/>
+    <label class = "full" for="star2" title="Kinda bad - 2 stars"></label>
+ 
+    <input type="radio" id="star1" name="rate" value="1" disabled/>
+    <label class = "full" for="star1" title="Sucks big time - 1 star"></label>
+</div>
+  </div>
+       <div>Message</div>
+            <textarea name="message" placeholder="Review about tour" style="height:100px" class="form-control" disabled>${tours[i].dataset.message}</textarea>
+        <div class="button-group">
+            
+            <button type="button" class="btn cancel" onclick="closeForm1()">Close</button>
+        </div>
+    </form>
+</div>`
+            console.log('hhhhhh')
+            calcRate(tours[i].dataset.star)
+            function calcRate(r) {
+                console.log('rrrrrrrrrr')
+                const f = ~~r,//Tương tự Math.floor(r)
+                    id = 'star' + f + (r % f ? 'half' : '')
+                id && (document.getElementById(id).checked = !0)
+            }
+        }
+        function openForm1() {
+            //    document.querySelector('.editUser .tourInfo ul li').classList.add('enableBlur')
+            document.getElementById("myForm1").style.display = "block";
+            //   document.getElementById("myForm1").classList.add('disableBlur')
+
+
+        }
+
+        function closeForm1() {
+            //   document.querySelector('.editUser .tourInfo ul li').classList.remove('enableBlur')
+            document.getElementById("myForm1").style.display = "none";
+        }
+    }
+
+
+</script>

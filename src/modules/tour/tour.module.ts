@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from 'src/auth/auth.module';
 import { CategoryRepository } from '../admin-category/category.repository';
+import { DepartureRepository } from '../admin-departure/departure.repository';
 import { Departure } from '../admin-departure/entities/departure.entity';
 import { DestinationModule } from '../destination/destination.module';
 import { DestinationRepository } from '../destination/destination.repository';
@@ -13,6 +14,7 @@ import { Plan } from './entities/plan.enity';
 import { Review } from './entities/review.entity';
 import { Tour } from './entities/tour.entity';
 import { ReviewRepository } from './review.repository';
+import { TicketRepository } from './ticket.repository';
 import { TourController } from './tour.controller';
 import { TourRepository } from './tour.repository';
 import { TourService } from './tour.service';
@@ -20,7 +22,7 @@ import { TourService } from './tour.service';
 @Module({
   imports: [
     TypeOrmModule.forFeature([
-      Departure,
+      DepartureRepository,
       TourRepository,
       Plan,
       DestinationRepository,
@@ -28,6 +30,7 @@ import { TourService } from './tour.service';
       CategoryRepository,
       Review,
       ReviewRepository,
+      TicketRepository,
     ]),
     AuthModule,
   ],

@@ -6,8 +6,10 @@ import {
   CreateDateColumn,
   Entity,
   ManyToOne,
+  OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { Review } from './review.entity';
 
 @Entity()
 export class Ticket extends BaseEntity {
@@ -16,7 +18,7 @@ export class Ticket extends BaseEntity {
 
   @Column({ nullable: false, name: 'status' })
   status: number;
-  //0:booking but not confirm, 1: confirm and not use yet, 2: using, 3:used
+  //0:booking but not confirm, 1: confirm and not use yet, 2: using, 3:used and not review,4:used and review, 5:cancel
 
   @Column({ nullable: false, name: 'number' })
   number: number;
@@ -34,6 +36,8 @@ export class Ticket extends BaseEntity {
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
+  @OneToOne(() => Review, (review) => review.ticket)
+  review: Review;
 
   @Column({
     name: 'updated_at',

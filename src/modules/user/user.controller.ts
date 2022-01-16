@@ -23,8 +23,8 @@ export class UserController {
   @Get('/profile')
   async showProfile(@Req() req, @Res() res) {
     let u = await this.userService.getInfo(req.user.id);
-    console.log(1111, u);
-    res.render('user/editInfo', { u: u });
+    console.log(u.ticket);
+    res.render('user/editInfo', { u: u.u, t: u.ticket });
   }
   @Auth('user')
   @Post('/edit')

@@ -1,49 +1,78 @@
 @import url('./header.css');
 @import url('./home.css');
 @import url('./footer.css');
-*{
-    padding: 0px ;
-    margin: 0px ;
-    box-sizing: border-box;
-    font-family: "Poppins",sans-serif;
-    letter-spacing: 0.01em;
-    font-size: 15px;
-    font-weight: 400;
+@import url('./login.css');
+@import url('./register.css');
+@import url('./navigation_admin.css');
+@import url('./admin_tours.css');
+@import url('./admin_header.css');
+@import url('./admin_tours.css');
+@import url('./admin_createDestination.css');
+@import url('./listDestination.css');
+@import url('./destinationDetail.css');
+@import url('./destination_detail.css');
+@import url('./listTour.css');
+@import url('./tourDetail.css');
+@import url('./editUser.css');
+@import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
+* {
+  padding: 0px;
+  margin: 0px;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+  letter-spacing: 0.01em;
+  font-size: 15px;
+  font-weight: 400;
 }
-.navbar{
-    padding: 0 ;
+.navbar {
+  padding: 0;
 }
-a{
-    cursor: pointer;
-    color: black;
+a {
+  cursor: pointer;
+  color: black;
 }
-h3{
-    font-family: 'Satisfy', cursive;
-    color: #3fd0d4;
-    font-size: 2.2rem;
-    line-height: 1.8em;
-    margin: 0px;
+h3 {
+  font-family: 'Satisfy', cursive;
+  color: #3fd0d4;
+  font-size: 2.2rem;
+  line-height: 1.8em;
+  margin: 0px;
 }
-h1{
-    margin: 0;
-        font-size: 65px;font-weight: 600;
-        letter-spacing: -0.05em;
-        line-height: 1em;
-
+h1 {
+  margin: 0;
+  font-size: 65px;
+  font-weight: 600;
+  letter-spacing: -0.05em;
+  line-height: 1em;
 }
-h5{
-    font-size: 18px;
-    line-height: calc(4rem/3);
-    font-weight: 600;
+h5 {
+  font-size: 18px;
+  line-height: calc(4rem / 3);
+  font-weight: 600;
 }
-h4{
-    font-weight: 600;
-    font-size: 22px;
-    line-height: 20px;
+h4 {
+  font-weight: 600;
+  font-size: 22px;
+  line-height: 20px;
 }
-i, a, img{cursor: pointer;}
+#message {
+  position: fixed;
+  z-index: 1;
+  top: 90%;
+  right: 2%;
+  transform: translateY(-50%);
+}
+#message i {
+  font-size: 50px;
+  color: aqua;
+}
+i,
+a,
+img {
+  cursor: pointer;
+}
 /* @import 'home.css';
-@import 'login.css';
+
 @import 'register.css';
 @import 'footer.css';
 @import 'create_country.css';

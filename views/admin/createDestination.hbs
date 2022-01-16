@@ -1,0 +1,126 @@
+<div class="admin-list create">
+
+    {{>admin_header}}
+    {{>adminNavigation}}
+    <div class="content">
+        <h2>Create Destination</h2>
+        <span class="create"><a href="/admin-destination/destinations">
+                < Back</a></span>
+        <form method="POST" enctype="multipart/form-data" action="/admin-destination/destinations">
+            <div class="row">
+                <div class="col">
+                    <label for="name">Destination name</label>
+                    <input name="name" id="name" type="text" class="form-control" placeholder="Enter destination name"
+                        value="{{c.name}}">
+
+                    <div class="d-e">{{err}}</div>
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+                <div class="col">
+                    <label for="country">Destination country</label>
+                    <input name="country" type="text" class="form-control" placeholder="Enter destination country"
+                        value="{{c.country}}">
+
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="visa">Visa requirement</label>
+                <input type="text" class="form-control" name="visa" value="{{c.visa}}">
+                <div class="d-e">Error</div>
+                <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <label for="language">Language Spoken</label>
+                    <input type="text" class="form-control" name="language" value="{{c.language}}">
+                    <div class="d-e">Error</div>
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+                <div class="col">
+                    <label for="currency">Currency used</label>
+                    <input type="text" class="form-control" name="currency" value="{{c.currency}}">
+                    <div class="d-e">Error</div>
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="area">Area</label>
+                <input type="number" class="form-control" name="area" placeholder="km2" value="{{c.area}}">
+                <div class="d-e">Error</div>
+                <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <div class="form-group">
+                <label for="description">Description</label>
+                <textarea class="form-control" name="description">{{c.description}}</textarea>
+                <div class="d-e">Error</div>
+                <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <div class="form-group">
+                <label for="image">Choose images about destination</label>
+                <input type="file" name="image" multiple="multiple" class="form-control-file" required>
+                <div class="d-e">Error</div>
+                <i class="fas fa-exclamation-triangle"></i>
+            </div>
+
+            <button type="submit" class=" btn btn-primary">Submit</button>
+        </form>
+    </div>
+</div>
+
+<script>
+
+    const submit = document.querySelector('.btn');
+    const form = document.querySelector('form');
+
+    var e = [];
+    e[0] = document.querySelector('input[name="name"]');
+    e[1] = document.querySelector('input[name="language"]');
+    e[2] = document.querySelector('input[name="visa"]');
+    e[3] = document.querySelector('input[name="currency"]');
+    e[4] = document.querySelector('input[name="area"]');
+    e[5] = document.querySelector('textarea[name="intro"]');
+    e[6] = document.querySelector('textarea[name="des"]');
+    if (e[0].value != "") {
+        e[0].parentElement.classList.add('error');
+    }
+    var err = false;
+    function vali(element) {
+        if (element.value.length === 0) {
+
+            element.parentElement.classList.add('error');
+            var x = element.getAttribute("name");
+            if (x === "des") x = "description";
+            else if (x === "intro") x = "introduce";
+            x = x[0].toUpperCase() + x.slice(1) + " must not be null";
+            element.nextElementSibling.innerHTML = x;
+            err = true;
+        }
+        else err = false;
+    };
+    form.onsubmit = function (a) {
+        var sub = false;
+
+        e.forEach(function (value, index) {
+            vali(value);
+        });
+
+        if (err) a.preventDefault();
+
+    };
+    e.forEach(function (value, index) {
+        value.onfocus = function (e) {
+            e.target.parentElement.classList.remove('error');
+        }
+    });
+    e.forEach(function (value, index) {
+        value.onfocusout = function (e) {
+            vali(e.target);
+        }
+    });
+
+
+
+
+</script>

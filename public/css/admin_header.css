@@ -1,0 +1,26 @@
+.header-admin {
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  /* height: 10vh; */
+  width: 80%;
+  margin-left: 20%;
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: row;
+  box-shadow: 0 3px 13px 0 rgba(0, 0, 0, 0.03);
+  padding: 20px 50px;
+  gap: 30px;
+  background-color: white;
+}
+.header-admin img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+.header-admin > p {
+  margin: 0;
+  line-height: 50px;
+  color: #f6ef1a;
+  font-size: 30px;
+}

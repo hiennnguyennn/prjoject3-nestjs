@@ -1,0 +1,256 @@
+<div class="admin-list create">
+
+    {{>admin_header}}
+    {{>adminNavigation}}
+    <div class="content">
+        <h2>Create Tour Departure (2)</h2>
+        <span class="create"><a href="/admin-departure/departures">
+                < Back</a></span>
+        <form>
+            <div class="row">
+                <div class="col">
+                    <label for="from">Origin</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi-pin-map"></i> </span>
+                        <input type="text" class="form-control origin-input" list="origin-options1"
+                            placeholder="Location" aria-describedby="origin-label" id="from" name="from" />
+                        <datalist id="origin-options1"></datalist>
+                    </div>
+                </div>
+                <div class="col">
+                    <label for="tour">Destination</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi-pin-map"></i> </span>
+                        <input type="text" class="form-control origin-input" list="origin-options2"
+                            placeholder="Location" aria-describedby="origin-label" id="to" name="to" />
+                        <datalist id="origin-options2"></datalist>
+                    </div>
+
+                </div>
+
+                {{!-- <div class="mb-2">
+                    <label id="origin-label" for="origin-input" class="form-label">Origin</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi-pin-map"></i> </span>
+                        <input type="text" class="form-control" list="origin-options" id="origin-input"
+                            placeholder="Location" aria-describedby="origin-label" />
+                        <datalist id="origin-options"></datalist>
+                    </div>
+                </div> --}}
+            </div>
+
+            <div class="row">
+
+                <div class="col">
+                    <label for="fromDate">Departure date</label>
+                    <input name="fromDate" id="fromDate" type="date" class="form-control"
+                        value="{{departure.dateStart}}">
+
+                    <div class="d-e">{{err}}</div>
+                    <i class="fas fa-exclamation-triangle"></i>
+
+                </div>
+                <div class="col">
+                    <label for="toDate">Return date</label>
+                    <input name="toDate" id="toDate" type="date" class="form-control" value="{{departure.dateEnd}}">
+
+                    <div class="d-e">{{err}}</div>
+                    <i class="fas fa-exclamation-triangle"></i>
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <label for="class">Travel class</label>
+                    <select style="height: 37px;" class="form-control value" name="class" id="class">
+
+                        <option value="ECONOMY">Economy</option>
+                        <option value="PREMIUM_ECONOMY">Premium Economy</option>
+                        <option value="BUSINESS">Business</option>
+                        <option value="FIRST">First</option>
+
+                    </select>
+                </div>
+                <div class="col">
+                    <label for="people">People</label>
+                    <input name="people" id="people" type="number" class="form-control" placeholder="Enter max people"
+                        value="{{departure.max}}">
+
+                    <div class="d-e">{{err}}</div>
+                    <i class="fas fa-exclamation-triangle"></i>
+
+                </div>
+            </div>
+
+
+
+            <button type="submit" class=" btn btn-primary">NEXT</button>
+            <div class="border-bottom mb-4 pt-4" id="search-results-separator"></div>
+            <div id="search-results-loader" style="align-items: center;text-align: center;"> <span>Loading...</span>
+                <div class="spinner-border" role="status">
+
+                </div>
+            </div>
+            <ul class="list-group mb-4" id="search-results"></ul>
+        </form>
+    </div>
+</div>
+
+<script>
+    let id = {{ departure.id }}
+    const searchResultsSeparator = document.getElementById(
+        "search-results-separator"
+    );
+    const searchResultsLoader = document.getElementById("search-results-loader");
+
+    searchResultsSeparator.classList.add("d-none");
+    searchResultsLoader.classList.add("d-none");
+
+    const autocomplete = (input, datalist, cityCodes) => {
+        clearTimeout(autocompleteTimeoutHandle);
+        autocompleteTimeoutHandle = setTimeout(async () => {
+            try {
+                const params = new URLSearchParams({ keyword: input.value });
+                const response = await fetch(`/admin-departure/api/autocomplete?keyword=${input.value}`);
+                const data = await response.json();
+                datalist.textContent = "";
+                data.forEach((entry) => {
+                    console.log(111, entry.name)
+
+                    cityCodes[entry.name.toLowerCase()] = entry.iataCode;
+                    datalist.insertAdjacentHTML(
+                        "beforeend",
+                        `<option value="${entry.name}"></option>`
+                    );
+                });
+            } catch (error) {
+                console.error(error);
+            }
+        }, autocompleteTimeout);
+    }; const autocompleteTimeout = 300;
+    let autocompleteTimeoutHandle = 0; let destinationCityCodes = {};
+    originInput = document.querySelectorAll('.origin-input');
+    let originOptions = [];
+    originOptions.push(document.querySelector('#origin-options1')); originOptions.push(document.querySelector('#origin-options2'));
+    console.log(originOptions)
+    let originCityCodes = [];
+    //let from = document.querySelector('#from'); let to = document.querySelector('#to');
+    originInput[0].addEventListener("input", () => {
+        if (originInput[0]) {
+            autocomplete(originInput[0], originOptions[0], originCityCodes);
+        }
+    });
+    originInput[1].addEventListener("input", () => {
+        if (originInput[1]) {
+            autocomplete(originInput[1], originOptions[1], destinationCityCodes);
+        }
+    });
+    const formatDate = (date) => {
+        date = new Date(date)
+        const [formattedDate] = date.toISOString().split("T");
+        return formattedDate;
+    };
+
+    form = document.querySelector('form');
+    button = document.querySelector('button')
+    form.onsubmit = async function (e) {
+        e.preventDefault();
+        searchResultsSeparator.classList.remove("d-none");
+        searchResultsLoader.classList.remove("d-none");
+        originInput[0].value = originCityCodes[originInput[0].value.toLowerCase()];
+        originInput[1].value = destinationCityCodes[originInput[1].value.toLowerCase()];
+        document.querySelector('#fromDate').value = formatDate(document.querySelector('#fromDate').value);
+        document.querySelector('#toDate').value = formatDate(document.querySelector('#toDate').value);
+        console.log(document.querySelector('#fromDate').value);
+        let result = await fetch(`/admin-departure/create2`,
+            {
+                headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+                method: "POST",
+                body: JSON.stringify({ from: document.querySelector('#from').value, to: document.querySelector('#to').value, fromDate: document.querySelector('#fromDate').value, toDate: document.querySelector('#toDate').value, travelClass: document.querySelector('#class').value, people: document.querySelector('#people').value })
+            })
+            .then(async (data) => {
+                searchResultsLoader.classList.add("d-none");
+                data = await data.json()
+                console.log(111111, data)
+                console.log(data[0]);
+                const searchResults = document.getElementById("search-results");
+                if (data.length === 0) {
+                    searchResults.insertAdjacentHTML(
+                        "beforeend",
+                        `<li class="list-group-item d-flex justify-content-center align-items-center" id="search-no-results">
+        No results
+      </li>`
+                    );
+                }
+                else {
+                    data.forEach(({ itineraries, price }) => {
+
+                        const priceLabel = `${price.total} ${price.currency}`;
+                        let start, end, startTime, returnTime, startDuration, endDuration
+                        itineraries
+                            .map((itinerary, index) => {
+                                const [, hours, minutes] = itinerary.duration.match(/(\d+)H(\d+)?/);
+                                if (index === 0) {
+                                    startDuration = hours + "h" + minutes + "m"
+                                    start = itinerary.segments
+                                        .flatMap(({ arrival, departure }, index, segments) => {
+                                            if (index === segments.length - 1) {
+                                                return [departure.iataCode, arrival.iataCode];
+                                            }
+                                            return [departure.iataCode];
+                                        })
+                                        .join(" → ");
+                                    startTime = itinerary.segments[0].departure.at
+                                } else {
+                                    endDuration = hours + "h" + minutes + "m"
+                                    end = itinerary.segments
+                                        .flatMap(({ arrival, departure }, index, segments) => {
+                                            if (index === segments.length - 1) {
+                                                return [departure.iataCode, arrival.iataCode];
+                                            }
+                                            return [departure.iataCode];
+                                        })
+                                        .join(" → ");
+                                    returnTime = itinerary.segments[itinerary.segments.length - 1].arrival.at
+                                }
+
+                            });
+
+                        searchResults.insertAdjacentHTML(
+                            "beforeend",
+                            `<li class="flex-column flex-sm-row list-group-item d-flex justify-content-between align-items-sm-center">
+        ${itineraries
+                                .map((itinerary, index) => {
+                                    const [, hours, minutes] = itinerary.duration.match(/(\d+)H(\d+)?/);
+                                    const travelPath = itinerary.segments
+                                        .flatMap(({ arrival, departure }, index, segments) => {
+                                            if (index === segments.length - 1) {
+                                                return [departure.iataCode, arrival.iataCode];
+                                            }
+                                            return [departure.iataCode];
+                                        })
+                                        .join(" → ");
+                                    return `
+            <div class="flex-column flex-1 m-2 d-flex">
+              <small class="text-muted">${index === 0 ? "Outbound" : "Return"
+                                        }</small>
+              <span class="fw-bold">${travelPath}</span>
+              <div>${hours || 0}h ${minutes || 0}m</div>
+            </div>
+          `;
+                                })
+                                .join("")}
+        <span class="bg-primary rounded-pill m-2 badge fs-6"><a href="/admin-departure/create3?id=${id}&start=${start}&end=${end}&startTime=${startTime}&returnTime=${returnTime}&startDuration=${startDuration}&endDuration=${endDuration}">${priceLabel}</a></span>
+      </li>`
+                        );
+                    });
+                }
+            }).catch(e => console.log(e))
+        //e.preventDefault()
+        // form.submit()
+    }
+
+
+
+
+</script>

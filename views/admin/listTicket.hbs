@@ -1,0 +1,160 @@
+<div class="admin-list">
+
+    {{>admin_header}}
+    {{>adminNavigation}}
+    <div class="content">
+        <h2>Ticket Listing</h2>
+        <table class="table table-hover table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">No</th>
+                    <th scope="col">Username</th>
+                    <th scope="col">Tour name</th>
+                    <th scope="col">Date start</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each result.items}}
+                <tr data-id={{this.ticket_id}} data-status={{this.ticket_status}} class="ticket-status">
+                    <th scope="row">{{sum @index 1}}</th>
+                    <td>{{this.owner_name}}</td>
+                    <td>{{this.tour_name}}</td>
+                    <td>{{date this.departure_start}}</td>
+                    <td>{{statusTicket this.ticket_status}}</td>
+                    {{!-- <td onclick="openForm1()">Change status</td> --}}
+                </tr>
+                {{/each}}
+
+            </tbody>
+
+        </table>
+        <select class="limit">
+            <option value="10" selected="selected" hidden="hidden">10/pages</option>
+            <option value="12">12/pages</option>
+            <option value="15">15/pages</option>
+        </select>
+        <nav aria-label="Page navigation example" style="position: absolute;bottom:15px;right:50px;margin-bottom: 0px;">
+            <ul class="pagination">
+                <li class="page-item">
+                    <a class="page-link"
+                        href="/admin-tour/tours?search={{data.search}}&sort={{data.sort}}&limit={{data.limit}}&page={{sum result.meta.currentPage -2}}">Previous</a>
+                </li>
+                <li class="page-item"><a class="page-link"
+                        href="/admin-tour/tours?search={{data.search}}&sort={{data.sort}}&limit={{data.limit}}&page={{sum result.meta.currentPage -1}}"
+                        name="page" value="{{sum result.meta.currentPage -1}}">{{sum result.meta.currentPage -1}}</a>
+                </li>
+                <li class="page-item active" aria-current="page">
+                    <span class="page-link">{{result.meta.currentPage}}</span>
+                </li>
+                <li class="page-item"><a class="page-link"
+                        href="/admin-tour/tours?search={{data.search}}&sort{{data.sort}}&limit={{data.limit}}&page={{sum result.meta.currentPage 1}}"
+                        name="page" value="{{sum result.meta.currentPage 1}}">{{sum result.meta.currentPage 1}}</a></li>
+                <li class="page-item">
+                    <a class="page-link"
+                        href="/admin-tour/tours?search={{data.search}}&sort{{data.sort}}&limit={{data.limit}}&page={{sum result.meta.currentPage 2}}">Next</a>
+                </li>
+
+        </nav>
+    </div>
+
+</div>
+{{!-- <div class="form-popup" id="myForm1">
+    <form action="/admin-user/users/editUserType/{{u.id}}" method="post" class="form-container">
+        <h5>Edit Ticket Status</h5>
+
+        <p>This ticket current status is {{role u.role}}</p>
+        <div class="button-group">
+            <label for="role">Select new status:</label>
+            <select name="role" id="cars">
+                <option class="select" value="0">Pending</option>
+                <option class="select" value="1">Confirm</option>
+                <option class="select" value="5">Cancel</option>
+
+            </select>
+        </div>
+        <div class="button-group">
+            <button type="submit" class="btn">CHANGE</button>
+            <button type="button" class="btn cancel" onclick="closeForm1()">Close</button>
+        </div>
+    </form>
+</div> --}}
+<script>
+    let tours = document.querySelectorAll('.admin-list .ticket-status');
+    for (var i = 0; i < tours.length; i++) {
+
+        tours[i].dataset.status = Number(tours[i].dataset.status);
+        console.log(tours[i].dataset.status)
+        if (tours[i].dataset.status == 0 || tours[i].dataset.status == 1) {
+            console.log(10)
+            tours[i].innerHTML = tours[i].innerHTML + `<td onclick="openForm1()"  style="cursor: pointer;">Change status</td>`;
+            let status;
+            if (tours[i].dataset.status == 0) status = 'Pending'
+            else status = 'Confirm';
+            console.log(11111, i, tours[i].dataset.id)
+            document.querySelector('.admin-list').outerHTML = document.querySelector('.admin-list').outerHTML + `<div class="form-popup" id="myForm1">
+    <form action="/admin-ticket/tickets/editStatus" method="post" class="form-container">
+        <h5>Edit Ticket Status</h5>
+
+        <p>This ticket current status is ${status}</p>
+        <input type="number" name="ticketId" value=${tours[i].dataset.id} style="display:none">
+        <div class="button-group">
+            <label for="status">Select new status:</label>
+            <select name="status">
+                <option class="select" value="0">Pending</option>
+                <option class="select" value="1">Confirm</option>
+                <option class="select" value="5">Cancel</option>
+
+            </select>
+        </div>
+        <div class="button-group">
+            <button type="submit" class="btn">CHANGE</button>
+            <button type="button" class="btn cancel" onclick="closeForm1()">Close</button>
+        </div>
+    </form>
+</div>`
+        }
+        function openForm1() {
+            document.querySelector('.admin-list').classList.add('blur')
+            document.getElementById("myForm1").style.display = "block";
+            document.getElementById("myForm1").style.filter = "blur(0px)"
+
+
+        }
+
+        function closeForm1() {
+            document.querySelector('.admin-list').classList.remove('blur')
+            document.getElementById("myForm1").style.display = "none";
+        }
+
+    }
+
+    const maxPage = {{ result.meta.totalPages }};
+    const limit = {{ result.meta.itemsPerPage }};
+    const page = {{ result.meta.totalPages }};
+
+    var pageLoad = document.getElementsByClassName('page-item');
+
+    if (pageLoad[1].innerText == 0 || pageLoad[1].innerText < 0) {
+        pageLoad[0].classList.add('none');
+        pageLoad[1].classList.add('none');
+    };
+    if (pageLoad[1].innerText == 1) {
+        pageLoad[0].classList.add('none')
+    };
+    if (pageLoad[2].innerText == maxPage | pageLoad[2].innerText > maxPage) {
+        pageLoad[3].classList.add('none');
+        pageLoad[4].classList.add('none');
+    };
+    if (pageLoad[3].innerText == maxPage) {
+        pageLoad[4].classList.add('none');
+    };
+    pageLoad[1].onclick = function (e) {
+        form.submit();
+    }
+    pageLoad[3].onclick = function (e) {
+        form.submit();
+    };
+
+</script>

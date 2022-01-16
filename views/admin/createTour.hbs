@@ -1,0 +1,235 @@
+<div class="admin-list create">
+
+    {{>admin_header}}
+    {{>adminNavigation}}
+    <div class="content">
+        <h2>Create Tour</h2>
+        <span class="create"><a href="/admin-tour/tours">
+                < Back</a></span>
+        <form method="POST" enctype="multipart/form-data" action="/admin-tour/tours">
+            <div class="row">
+                <div class="col">
+                    <label for="name">Tour name</label>
+                    <input name="name" id="name" type="text" class="form-control value" placeholder="Enter tour name"
+                        value="{{t.name}}">
+
+                    <div class="d-e">{{err}}</div>
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+                <div class="col">
+                    <label for="des">Tour From</label>
+                    <select style="height: 37px;" class="form-control value" name="from" id="from">
+                        {{#each des}}
+                        <option value={{this.id}}>{{this.name}}</option>
+                        {{/each}}
+                    </select>
+
+                </div>
+                <div class="col">
+                    <label for="des">Tour destinations</label>
+                    <select style="height: 37px;" class="form-control value" name="des" id="des" multiple>
+                        {{#each des}}
+                        <option value={{this.id}}>{{this.name}}</option>
+                        {{/each}}
+                    </select>
+
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col">
+                    <label for="price">Tour price</label>
+                    <input type="text" class="form-control value" name="price" value="{{t.price}}">
+                    <div class="d-e">Error</div>
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+                <div class="col">
+                    <label for="minAge">Tour require min age</label>
+                    <input type="number" class="form-control value" name="minAge" value="{{t.minAge}}">
+                    <div class="d-e">Error</div>
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+                <div class="col">
+                    <label for="days">Days</label>
+                    <input type="number" class="form-control value" name="days" value="{{t.days}}">
+                    <div class="d-e">Error</div>
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+            </div>
+            <div class="plan row">
+                <p>Tour plan</p>
+                <div name="plan" class="plan-day">
+
+                    <label for="plan_title">Title</label>
+                    <input type="text" class="form-control" name="plan_titles[]" placeholder="Main action">
+                    <div class="row">
+                        <div class="col">
+                            <label for="plan_included">Included</label>
+                            <input type="text" class="form-control" name="plan_includes[]" placeholder="Plan included">
+                        </div>
+
+                        <div class="col">
+                            <label for="plan_notIncluded">Not included</label>
+                            <input type="text" class="form-control" name="plan_notIncludes[]"
+                                placeholder="Plan not included">
+                        </div>
+                    </div>
+                    <label for="plan_description">Description</label>
+                    <input type="text" class="form-control" name="plan_descriptions[]" placeholder="Plan description">
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <label for="departureAddr">Departure Address</label>
+                    <input type="text" class="form-control value" name="departureAddr" value="{{t.departureAddr}}">
+                    <div class="d-e">Error</div>
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+                <div class="col">
+                    <label for="dresscode">Tour dresscode</label>
+                    <input type="text" class="form-control value" name="dresscode" value="{{t.dresscode}}">
+                    <div class="d-e">Error</div>
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col">
+                    <label for="timeStart">Tour time start</label>
+                    <input type="text" class="form-control value" name="timeStart" value="{{t.timeStart}}">
+                    <div class="d-e">Error</div>
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+                <div class="col">
+                    <label for="timeReturn">Tour time return</label>
+                    <input type="text" class="form-control value" name="timeReturn" value="{{t.timeReturn}}">
+                    <div class="d-e">Error</div>
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+
+            </div>
+            <div class="form-group">
+                <label for="included">Tour included</label>
+                <textarea class="form-control value" name="included">{{t.included}}</textarea>
+                <div class="d-e">Error</div>
+                <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <div class="form-group">
+                <label for="notIncluded">Tour not included</label>
+                <textarea class="form-control value" name="notIncluded">{{t.notIncluded}}</textarea>
+                <div class="d-e">Error</div>
+                <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <div class="form-group">
+                <label for="description">Description</label>
+                <textarea class="form-control value" name="description">{{t.description}}</textarea>
+                <div class="d-e">Error</div>
+                <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <div class="cate">
+                <label for="categories">How Would You Categorize This Tour? </label>
+                <div class="categories">
+                    <div>
+                        {{#each category}}
+                        <div class="category" data-id={{this.id}}>{{this.name}}</div>
+                        {{/each}}
+                    </div>
+                </div>
+                <div class="d-e cate-err">Error</div>
+                <i class="fas fa-exclamation-triangle"></i>
+                <input name="category" class="cateInput" style="display: none;">
+            </div>
+            <div class="form-group">
+                <label for="image">Choose images about destination</label>
+                <input type="file" name="image" multiple="multiple" class="form-control-file" required>
+                <div class="d-e">Error</div>
+                <i class="fas fa-exclamation-triangle"></i>
+            </div>
+
+            <button type="submit" class=" btn btn-primary">Submit</button>
+        </form>
+    </div>
+</div>
+
+<script>
+
+    const submit = document.querySelector('.btn');
+    const form = document.querySelector('form');
+    const cate = document.querySelector('.cateInput')
+    var e = document.querySelectorAll('.value');
+    const plan_day = document.querySelector('.plan-day'); const plan = document.querySelector('.plan');
+    var err = false;
+    function vali(element) {
+        if (element.value.length === 0) {
+
+            element.parentElement.classList.add('error');
+            var x = element.getAttribute("name");
+            if (x === "des") x = "description";
+            else if (x === "intro") x = "introduce";
+            x = x[0].toUpperCase() + x.slice(1) + " must not be null";
+            element.nextElementSibling.innerHTML = x;
+            err = true;
+        }
+        else err = false;
+    };
+
+
+    e.forEach(function (value, index) {
+        value.onfocus = function (e) {
+            e.target.parentElement.classList.remove('error');
+        }
+    });
+    e.forEach(function (value, index) {
+        value.onfocusout = function (e) {
+            vali(e.target);
+        }
+    });
+    const category = document.querySelectorAll('.categories .category');
+    console.log(category)
+    let array = [];
+    for (var i = 0; i < category.length; i++) {
+
+        (function (index) {
+            category[i].onclick = function (e) {
+                if (e.target.classList.contains('selected')) {
+                    var tmp = array.indexOf(e.target);
+                    array.splice(tmp, 1);
+                }
+                else array.push(Number(category[index].dataset.id));
+                console.log(array);
+
+                e.target.classList.toggle('selected')
+            }
+        })(i);
+        console.log(cate)
+    } form.onsubmit = function (a) {
+
+        cate.value = array;
+
+        e.forEach(function (value, index) {
+            vali(value);
+            console.log(err)
+        });
+
+        if (err) a.preventDefault();
+
+    };
+
+    e[5].onfocusout = function (e) {
+        console.log(11111, e.target.value)
+        var s = e.target.value;
+
+
+        var tmp = plan_day.outerHTML;
+        var t = plan_day.innerHTML;
+        plan_day.innerHTML = `<p>Day 1</p>` + plan_day.innerHTML;
+        for (var i = 1; i < s; i++) {
+            var tm = `<div name="plan" name="plan${i}" class="plan-day"><p>Day ${i + 1}</p> ${t}</div>`;
+            plan.innerHTML += tm;
+        };
+        plan.classList.add('show');
+    };
+
+</script>

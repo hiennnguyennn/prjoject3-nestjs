@@ -6,6 +6,7 @@ import { Departure } from './entities/departure.entity';
 import * as Amadeus from 'amadeus';
 import { DestinationRepository } from '../destination/destination.repository';
 import { ListDepartureDto } from './dto/list.dto';
+import { TicketRepository } from '../tour/ticket.repository';
 @Injectable()
 export class AdminDepartureService {
   constructor(
@@ -13,6 +14,7 @@ export class AdminDepartureService {
     private readonly userRepository: UserRepository,
     private readonly tourRepository: TourRepository,
     private readonly destinationRepository: DestinationRepository,
+    private readonly ticketRepository: TicketRepository,
   ) {}
 
   async createDeparture(data, userId) {
@@ -125,7 +127,25 @@ export class AdminDepartureService {
       .createQueryBuilder('departure')
       .select('departure')
       .getOne();
+    let ticket = await this.ticketRepository.getTicketDeparture(id);
+    for (var i = 0; i < ticket.length; i++) {
+      ticket[i].status = 5;
+      await ticket[i].save;
+    }
 
     return await this.departureRepository.delete(d);
+  }
+  async edit(data) {
+    let d = await this.departureRepository.getOne(data.id);
+    d.status = data.status;
+    await d.save();
+    let t = await this.ticketRepository.getTicketDeparture(data.id);
+    console.log(t);
+    for (var i = 0; i < t.length; i++) {
+      if (data.status == 2) t[i].status = 2;
+      else if (data.status == 3) t[i].status = 3;
+      await t[i].save();
+    }
+    return 'success';
   }
 }

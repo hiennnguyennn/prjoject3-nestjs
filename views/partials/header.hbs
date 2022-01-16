@@ -40,12 +40,14 @@
                 <a class="siteId" href="/">
                     <img src="/image/web/logo3.png">
                 </a>
-                <div class="collapse navbar-collapse d-flex justify-content-center" id="navbarSupportedContent">
-                    <ul class="menu navbar-nav me-auto mb-2 mb-lg-0">
+                <div class="collapse navbar-collapse d-flex justify-content-center" id="navbarSupportedContent"
+                    style="justify-content: center; align-items: center;">
+                    <ul class="menu navbar-nav me-auto mb-2 mb-lg-0"
+                        style="position: absolute; left: 50%; transform: translateX(-50%);">
                         <li class="menu-item d-flex align-items-center nav-item ">
                             Home
-                            <ul class="dropdown-menu">
-                                <li><a href="#">Travel Agency</a></li>
+                            <ul class="dropdown-menu drop-category">
+                                {{!-- <li><a href="#">Travel Agency</a></li>
                                 <li><a href="#">Winter Holidays</a></li>
                                 <li><a href="#">Exotic Destinations</a></li>
                                 <li><a href="#">Summer Holidays</a></li>
@@ -54,7 +56,7 @@
                                 <li><a href="#">Destinations Carousel</a></li>
                                 <li><a href="#">Wine Tours</a></li>
                                 <li><a href="#">Vacation Showcase</a></li>
-                                <li><a href="#">Landing</a></li>
+                                <li><a href="#">Landing</a></li> --}}
 
                             </ul>
                         </li>
@@ -71,24 +73,24 @@
                             </ul>
                         </li>
                         <li class="menu-item -flex align-items-center nav-item ">
-                            <a href="/destination">
+                            <a href="/destinations">
                                 Destinations
                             </a>
                         </li>
                         <li class="menu-item d-flex align-items-center nav-item ">
-                            <a href="/tour">
+                            <a href="/tours">
                                 Tours
                             </a>
                         </li>
-                        <li class="menu-item d-flex align-items-center nav-item ">
+                        {{!-- <li class="menu-item d-flex align-items-center nav-item ">
                             Create
                             <ul class="dropdown-menu">
                                 <li><a href="/destination/create">Destination</a></li>
-                                <li><a href="tour/create">Tour</a></li>
-
+                                <li><a href="/tour/create">Tour</a></li>
+                                <li><a href="/category/create">Category</a></li>
 
                             </ul>
-                        </li>
+                        </li> --}}
 
 
                     </ul>
@@ -103,12 +105,12 @@
                             {{!-- <img src='{{avatar}}'> --}}
                             <img src="https://avatar-redirect.appspot.com/google/106985616779575625930?size=400">
                             <div class="dropdown-content active">
-                                <a href="/login">Login</a>
-                                <a href="/register">Register</a>
+                                <a href="/auth/login">Login</a>
+                                <a href="/auth/register">Register</a>
                             </div>
-                            <div class="dropdown-content ">
-                                <a href="/login">My profile</a>
-                                <a href="/me/logout">Log out</a>
+                            <div class="dropdown-content">
+                                <a href="/users/profile">My profile</a>
+                                <a href="/users/logout">Log out</a>
                             </div>
                         </li>
                     </ul>
@@ -118,15 +120,29 @@
     </div>
 </div>
 <script>
-    var drop = document.querySelectorAll('.dropdown-content');
-    var login = {{ login }};
-    console.log(login);
-    if (login) {
-        drop[1].classList.add('active');
-        drop[0].classList.remove('active');
+    var dropxxx = document.querySelectorAll('.header .navbar-nav .dropdown-content'); console.log(dropxxx);
+
+    var dropCategory = document.querySelector('.drop-category');
+    fetch(`/admin-category/all`).then(data => {
+        return data.json();
+    }).then(c => {
+
+        c.forEach((entry) => {
+            dropCategory.innerHTML = dropCategory.innerHTML + `<li><a href="/tours?category=${entry.id}">${entry.name}</a></li>`
+        })
+    });
+    async function login() {
+        console.log(2121111)
+        let data = await fetch('/users/infoLogin');
+        console.log(1111, data.status);
+        if (data.status == 200) {
+            data = await data.json(); console.log(data); dropxxx[1].classList.add('active');
+            dropxxx[0].classList.remove('active');
+        } else {
+            console.log(233333)
+            dropxxx[0].classList.add('active');
+            dropxxx[1].classList.remove('active');
+        }
     }
-    else {
-        drop[0].classList.add('active');
-        drop[1].classList.remove('active');
-    }
+    login();
 </script>
